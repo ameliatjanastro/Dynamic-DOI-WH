@@ -13,7 +13,7 @@ st.write("### Raw Data Preview")
 st.dataframe(df.head())
 
 # Ensure necessary columns exist
-required_cols = ["L1 Category", "OLD", "NEW", "#Hub OOS karena WH", "# New Hub OOS"]
+required_cols = ["cycle", "L1 Category", "OLD", "NEW", "#Hub OOS karena WH", "# New Hub OOS"]
 if not all(col in df.columns for col in required_cols):
     st.error("Missing required columns in the dataset.")
     st.stop()
