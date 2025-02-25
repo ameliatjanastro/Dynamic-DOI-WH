@@ -49,7 +49,7 @@ fig2 = px.bar(category_summary, x="L1 Category", y="OOS Improvement",
 st.plotly_chart(fig2)
 
 # Show RL % Change in a Line Chart per Cycle
-fig3 = px.line(category_summary, x="L1 Category", y="RL Qty Change %", color="cycle", markers=True,
+fig3 = px.line(category_summary, x="L1 Category", y="RL Qty Change %", markers=True,
                title="Percentage Change in RL Quantity by L1 Category per Cycle")
 st.plotly_chart(fig3)
 
