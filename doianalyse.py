@@ -44,7 +44,7 @@ fig2 = px.bar(category_summary, x="L1 Category", y="OOS Improvement", title="Imp
 st.plotly_chart(fig2)
 
 # Show RL % Change in a Line Chart
-fig3 = px.line(category_summary, x="L1 Category", y="RL Change %", markers=True,
+fig3 = px.line(category_summary, x="L1 Category", y="RL Qty Change %", markers=True,
                title="Percentage Change in RL Quantity by L1 Category")
 st.plotly_chart(fig3)
 
