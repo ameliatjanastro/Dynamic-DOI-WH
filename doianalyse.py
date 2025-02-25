@@ -18,6 +18,10 @@ if not all(col in df.columns for col in required_cols):
     st.error("Missing required columns in the dataset.")
     st.stop()
 
+# Sidebar filter for cycle
+selected_cycle = st.sidebar.selectbox("Select Cycle", df["cycle"].unique())
+df = df[df["cycle"] == selected_cycle]
+
 # Compute RL Change & OOS Impact
 df["RL Qty Change %"] = ((df["NEW"] - df["OLD"]) / df["OLD"]) * 100
 df["OOS Impact"] = df["#Hub OOS karena WH"] - df["# New Hub OOS"]  # Change in OOS hubs
