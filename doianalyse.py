@@ -44,7 +44,7 @@ fig1 = px.bar(category_summary, x="L1 Category", y=["OLD", "NEW"],
 st.plotly_chart(fig1)
 
 # Plot OOS impact by L1 Category per Cycle
-fig2 = px.bar(category_summary, x="L1 Category", y="OOS Improvement", color="cycle",
+fig2 = px.bar(category_summary, x="L1 Category", y="OOS Improvement",
               title="Improvement in OOS # by L1 Category per Cycle")
 st.plotly_chart(fig2)
 
