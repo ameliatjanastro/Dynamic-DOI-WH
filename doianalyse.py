@@ -40,7 +40,7 @@ category_summary["OOS Improvement"] = category_summary["#Hub OOS karena WH"] - c
 
 # Plot RL Change by L1 Category per Cycle
 fig1 = px.bar(category_summary, x="L1 Category", y=["OLD", "NEW"],
-              barmode="group", title=f"Old vs New RL Quantity by L1 Category - Cycle {selected_cycle}")
+              barmode="group", title=f"Old vs New RL Quantity by L1 Category")
 st.plotly_chart(fig1)
 
 # Plot OOS impact by L1 Category per Cycle
