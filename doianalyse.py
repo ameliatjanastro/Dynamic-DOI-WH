@@ -34,20 +34,22 @@ category_summary = df.groupby(["cycle","L1 Category"]).agg({
 category_summary["RL Qty Change %"] = ((category_summary["NEW"] - category_summary["OLD"]) / category_summary["OLD"]) * 100
 category_summary["OOS Improvement"] = category_summary["#Hub OOS karena WH"] - category_summary["# New Hub OOS"]
 
-# Plot RL Change by L1 Category
+# Plot RL Change by L1 Category per Cycle
 fig1 = px.bar(category_summary, x="L1 Category", y=["OLD", "NEW"],
-              barmode="group", title="Old vs New RL Quantity by L1 Category")
+              color="cycle", barmode="group", title="Old vs New RL Quantity by L1 Category per Cycle")
 st.plotly_chart(fig1)
 
-# Plot OOS impact by L1 Category
-fig2 = px.bar(category_summary, x="L1 Category", y="OOS Improvement", title="Improvement in OOS # by L1 Category")
+# Plot OOS impact by L1 Category per Cycle
+fig2 = px.bar(category_summary, x="L1 Category", y="OOS Improvement", color="cycle",
+              title="Improvement in OOS # by L1 Category per Cycle")
 st.plotly_chart(fig2)
 
-# Show RL % Change in a Line Chart
-fig3 = px.line(category_summary, x="L1 Category", y="RL Qty Change %", markers=True,
-               title="Percentage Change in RL Quantity by L1 Category")
+# Show RL % Change in a Line Chart per Cycle
+fig3 = px.line(category_summary, x="L1 Category", y="RL Change %", color="cycle", markers=True,
+               title="Percentage Change in RL Quantity by L1 Category per Cycle")
 st.plotly_chart(fig3)
 
 st.write("### Key Insights")
 st.write("- Positive RL % Change means increased RL quantity.")
 st.write("- A decrease in OOS # suggests improved stock availability.")
+
