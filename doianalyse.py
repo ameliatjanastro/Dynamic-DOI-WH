@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 # Load data
-file_path = "/mnt/data/Dynamic DOI WH Analisis - SUMMARY.csv"
-df = pd.read_csv(file_path)
+
+df = pd.read_csv("Dynamic DOI WH Analisis - SUMMARY.csv")
 
 # Display raw data in Streamlit
 st.title("New vs Old RL Quantity & OOS Performance Analysis")
