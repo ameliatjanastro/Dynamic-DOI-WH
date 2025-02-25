@@ -19,8 +19,8 @@ if not all(col in df.columns for col in required_cols):
     st.stop()
 
 # Sidebar filter for cycle
-selected_cycle = st.sidebar.selectbox("Select Cycle", df["cycle"].unique())
-df = df[df["cycle"] == selected_cycle]
+#selected_cycle = st.sidebar.selectbox("Select Cycle", df["cycle"].unique())
+#df = df[df["cycle"] == selected_cycle]
 
 # Compute RL Change & OOS Impact
 df["RL Qty Change %"] = ((df["NEW"] - df["OLD"]) / df["OLD"]) * 100
