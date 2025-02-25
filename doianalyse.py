@@ -23,7 +23,7 @@ df["RL Qty Change %"] = ((df["NEW"] - df["OLD"]) / df["OLD"]) * 100
 df["OOS Impact"] = df["#Hub OOS karena WH"] - df["# New Hub OOS"]  # Change in OOS hubs
 
 # Group by L1 Category
-category_summary = df.groupby("L1 Category").agg({
+category_summary = df.groupby(["cycle","L1 Category"]).agg({
     "OLD": "sum",
     "NEW": "sum",
     "#Hub OOS karena WH": "sum",
