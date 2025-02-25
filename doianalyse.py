@@ -19,7 +19,7 @@ if not all(col in df.columns for col in required_cols):
     st.stop()
 
 # Compute RL Change & OOS Impact
-df["RL Change %"] = ((df["NEW"] - df["OLD"]) / df["OLD"]) * 100
+df["RL Qty Change %"] = ((df["NEW"] - df["OLD"]) / df["OLD"]) * 100
 df["OOS Impact"] = df["#Hub OOS karena WH"] - df["# New Hub OOS"]  # Change in OOS hubs
 
 # Group by L1 Category
@@ -31,7 +31,7 @@ category_summary = df.groupby("L1 Category").agg({
 }).reset_index()
 
 # Calculate improvement percentage
-category_summary["RL Change %"] = ((category_summary["NEW"] - category_summary["OLD"]) / category_summary["OLD"]) * 100
+category_summary["RL Qty Change %"] = ((category_summary["NEW"] - category_summary["OLD"]) / category_summary["OLD"]) * 100
 category_summary["OOS Improvement"] = category_summary["#Hub OOS karena WH"] - category_summary["# New Hub OOS"]
 
 # Plot RL Change by L1 Category
