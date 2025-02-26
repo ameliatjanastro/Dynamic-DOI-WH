@@ -92,7 +92,7 @@ if selected_locations:
     filtered_df = filtered_df[filtered_df['location_id'].isin(selected_locations)]
 
 if selected_categories:
-    filtered_df = filtered_df[filtered_df['l1_category_name'].isin(selected_categories)]
+    filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_categories]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
