@@ -25,7 +25,7 @@ inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
 merged_df = pd.merge(total_df, inb_df[['OOS_Date', 'Actual', 'Max Projected']],
                      left_on='Date', right_on='OOS_Date', how='left')
 
-merged_df = pd.merge(merged_df, analisa_df, on='Product ID', how='left')
+merged_df2 = analisa_df
 
 # Filter projected OOS% calculations for 12 Feb - 17 Feb
 #projection_dates = (merged_df['Date'] >= '2025-02-10') & (merged_df['Date'] <= '2025-02-15')
@@ -95,8 +95,8 @@ st.write(merged_df.head())
 
 # Compare RL Qty, Actual RL Qty, NEW Landed DOI, OLD Landed DOI for each Product ID
 st.subheader("Comparison of RL Qty, Actual RL Qty, Landed DOI OLD, and Landed DOI NEW")
-selected_product = st.selectbox("Select Product ID", merged_df['Product ID'].unique())
-filtered_data = merged_df[merged_df['Product ID'] == selected_product]
+selected_product = st.selectbox("Select Product ID", merged_df2['Product ID'].unique())
+filtered_data = merged_df2[merged_df2['Product ID'] == selected_product]
 
 fig, ax = plt.subplots(figsize=(12, 6))
 ax.plot(filtered_data['Date'], filtered_data['New_RL_Qty'], label='RL Qty', marker='o')
