@@ -63,19 +63,19 @@ filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
-fig, ax = plt.subplots(figsize=(10, 5))
-ax.barh(['Landed DOI New', 'Landed DOI OLD'], [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()], color=['r', 'g'])
-ax.set_xlabel('Landed DOI')
-ax.set_title('Comparison of Landed DOI New vs Old')
-ax.grid()
-st.pyplot(fig)
+#fig, ax = plt.subplots(figsize=(10, 5))
+#ax.barh(['Landed DOI New', 'Landed DOI OLD'], [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()], color=['r', 'g'])
+#ax.set_xlabel('Landed DOI')
+#ax.set_title('Comparison of Landed DOI New vs Old')
+#ax.grid()
+#st.pyplot(fig)
 
-fig, ax = plt.subplots(figsize=(9, 5))
-ax.barh(['RL Qty Actual', 'RL Qty NEW after MIN QTY WH'], [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()], color=['r', 'g'])
-ax.set_xlabel('RL Quantity')
-ax.set_title('Comparison of RL Qty')
-ax.grid()
-st.pyplot(fig)
+#fig, ax = plt.subplots(figsize=(9, 5))
+#ax.barh(['RL Qty Actual', 'RL Qty NEW after MIN QTY WH'], [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()], color=['r', 'g'])
+#ax.set_xlabel('RL Quantity')
+#ax.set_title('Comparison of RL Qty')
+#ax.grid()
+#st.pyplot(fig)
 
 import plotly.express as px
 
