@@ -68,11 +68,11 @@ with col2:
     notes = """
     - Used Logic: DOI Policy 5 days, No Min SS WH, Cov 14 days
     - Proposed Logic: DOI Policy L2PO, With Min SS WH, Cov Next Next Inb
-
-    st.write(f"**Total Count SKUs with prevented OOS (ke order sebelumnya tidak):** {total_products}")
-    st.write(f"**Total Sum of Add RL Qty New DOI Policy:** {total_rl_qty_new}")
     """
     st.markdown(notes)
+    st.write(f"**Total Count SKUs with prevented OOS (ke order sebelumnya tidak):** {total_products}")
+    st.write(f"**Total Sum of Add RL Qty New DOI Policy:** {total_rl_qty_new}")
+    
 
 
 # Show summary at the bottom
