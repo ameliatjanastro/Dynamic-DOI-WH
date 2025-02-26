@@ -50,24 +50,21 @@ ax.legend()
 ax.grid()
 st.pyplot(fig)
 
-    # Bar plot for inbound quantities with OOS overlay
+# Bar plot for inbound quantities with OOS overlay
 fig, ax1 = plt.subplots(figsize=(10, 5))
 bar_width = 0.4
-x_indexes = np.arange(len(inb_df['Date']))
-ax1.bar(x_indexes - bar_width/2, merged_df['Actual'], width=bar_width, label='Actual Inb Qty', alpha=0.7)
-ax1.bar(x_indexes + bar_width/2, merged_df['Max Projected'], width=bar_width, label='Projected Inb Qty', alpha=0.7)
-ax1.set_xlabel('Date')
-ax1.set_ylabel('Inbound Quantity')
-ax1.set_xticks(x_indexes)
-ax1.set_xticklabels(inb_df['Date'].dt.strftime('%Y-%m-%d'), rotation=45)
-ax1.legend(loc='upper left')
-ax1.grid(axis='y')
-
-    # Line plot for OOS%
+x_indexes = np.arange(len(merged_df['Date']))
 ax2 = ax1.twinx()
 ax2.plot(x_indexes, merged_df['% OOS Contribution'], label='Actual OOS %', marker='d', color='r', linestyle='--')
 ax2.plot(x_indexes, merged_df['Projected % OOS Contribution'], label='Projected OOS %', marker='x', color='b', linestyle='--')
 ax2.set_ylabel('OOS %')
 ax2.legend(loc='upper right')
-
+ax1.bar(x_indexes - bar_width/2, merged_df['Actual'], width=bar_width, label='Actual Inb Qty', alpha=0.7)
+ax1.bar(x_indexes + bar_width/2, merged_df['Max Projected'], width=bar_width, label='Projected Inb Qty', alpha=0.7)
+ax1.set_xlabel('Date')
+ax1.set_ylabel('Inbound Quantity')
+ax1.set_xticks(x_indexes)
+ax1.set_xticklabels(merged_df['Date'].dt.strftime('%Y-%m-%d'), rotation=45)
+ax1.legend(loc='upper left')
+ax1.grid(axis='y')
 st.pyplot(fig)
