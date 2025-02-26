@@ -26,18 +26,6 @@ merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projec
 # Calculate projected OOS% based on inbound quantity ratio
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
 
-# Plot actual vs projected inbound quantity
-fig_inb = px.line(inb_df, x='Date', y=['Actual', 'Max Projected'],
-                   labels={'value': 'Inbound Quantity', 'variable': 'Type'},
-                   title='Actual vs Projected Inbound Quantity')
-st.plotly_chart(fig_inb)
-
-# Plot actual vs projected OOS% trend
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
-                   labels={'value': 'OOS %', 'variable': 'Type'},
-                   title='Actual vs Projected Out-of-Stock Percentage Trend')
-st.plotly_chart(fig_oos)
-
 analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
 analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
 analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].apply(pd.to_numeric, errors='coerce')
@@ -50,6 +38,22 @@ sum_rl_qty_new = analisa_df2['RL Qty NEW after MIN QTY WH'].sum()
 st.dataframe(analisa_df2[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']])
 st.write("Total RL Qty Actual:", sum_rl_qty_actual)
 st.write("Total RL Qty New after MIN QTY WH:", sum_rl_qty_new)
+
+
+# Plot actual vs projected inbound quantity
+
+fig_inb = px.line(inb_df, x='Date', y=['Actual', 'Max Projected'],
+                   labels={'value': 'Inbound Quantity', 'variable': 'Type'},
+                   title='Actual vs Projected Inbound Quantity')
+st.plotly_chart(fig_inb)
+
+# Plot actual vs projected OOS% trend
+fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+                   labels={'value': 'OOS %', 'variable': 'Type'},
+                   title='Actual vs Projected Out-of-Stock Percentage Trend')
+st.plotly_chart(fig_oos)
+
+
 
 # Exclude Landed DOI values greater than 21 before calculating the average
 #filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
