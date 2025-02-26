@@ -165,8 +165,8 @@ col1, col2 = st.columns(2)
 # Landed DOI Comparison
 with col1:
     landed_doi_data = pd.DataFrame({
-        "Category": ["Landed DOI New", "Landed DOI Old"],
-        "Value": [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()]
+        "Category": ["Landed DOI Old", "Landed DOI New"],
+        "Value": [filtered_df['Landed DOI OLD'].mean(), filtered_df['Landed DOI New'].mean()]
     })
 
     fig_doi = px.bar(landed_doi_data, y="Value", x="Category", orientation='v',
