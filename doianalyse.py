@@ -55,14 +55,22 @@ ax.legend()
 ax.grid()
 st.pyplot(fig)
 
-# Compare RL Qty Actual vs RL Qty New after MIN QTY WH
+# Product ID filter
+product_ids = analisa_df['Product ID'].unique()
+selected_product = st.selectbox("Select Product ID", product_ids)
+filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
+
+# Compare RL Qty Actual vs RL Qty New after MIN QTY WH as bar chart
 fig, ax = plt.subplots(figsize=(10, 5))
-ax.plot(analisa_df['Inbound_Date NEW'], analisa_df['RL Qty Actual'], label='RL Qty Actual', marker='o', color='b')
-ax.plot(analisa_df['Inbound_Date NEW'], analisa_df['RL Qty NEW after MIN QTY WH'], label='RL Qty New after MIN QTY WH', marker='s', color='m')
-ax.set_xlabel('Date')
+x_indexes = np.arange(len(filtered_df['Inbound_Date NEW']))
+bar_width = 0.4
+ax.bar(x_indexes - bar_width/2, filtered_df['RL Qty Actual'], width=bar_width, label='RL Qty Actual', color='b', alpha=0.7)
+ax.bar(x_indexes + bar_width/2, filtered_df['RL Qty NEW after MIN QTY WH'], width=bar_width, label='RL Qty New after MIN QTY WH', color='m', alpha=0.7)
+ax.set_xlabel('Inbound_Date NEW')
 ax.set_ylabel('RL Quantity')
-ax.set_title('RL Qty Actual vs RL Qty New after MIN QTY WH')
+ax.set_title(f'RL Qty Actual vs RL Qty New after MIN QTY WH for Product {selected_product}')
+ax.set_xticks(x_indexes)
+ax.set_xticklabels(filtered_df['Inbound_Date NEW'].dt.strftime('%Y-%m-%d'), rotation=45)
 ax.legend()
 ax.grid()
 st.pyplot(fig)
-
