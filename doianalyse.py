@@ -4,9 +4,10 @@ import streamlit as st
 import plotly.express as px
 
 # Streamlit app title
-st.title("Inbound vs OOS Analysis")
+st.title("Why use L2PO for DOI Policy?")
 
-st.subheader("Overall View")
+st.markdown("<h1 style='color: blue;'>Overall View</h1>", unsafe_allow_html=True)
+
 
 # Load CSV files
 inb_df = pd.read_csv("inb.csv")
