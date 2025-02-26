@@ -73,7 +73,7 @@ st.pyplot(fig)
 fig, ax = plt.subplots(figsize=(10, 5))
 ax.barh(['RL Qty Actual', 'RL Qty NEW after MIN QTY WH'], [filtered_df['RL Qty Actual'].sum(), filtered_df['RL Qty NEW after MIN QTY WH'].sum()], color=['r', 'g'])
 ax.set_xlabel('RL Quantity')
-ax.set_title('Comparison of Landed DOI New vs Old')
+ax.set_title('Comparison of RL Qty')
 ax.grid()
 st.pyplot(fig)
 
