@@ -17,7 +17,7 @@ total_df['Date'] = pd.to_datetime(total_df['Date'])
 analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound_Date NEW'])
 
 # Adjust inbound dates to align with OOS dates (OOS dates = Inb dates +2)
-total_df['OOS_Date'] = total_df['Date'] + pd.Timedelta(days=2)
+inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
 
 # Merge inbound data with total data on adjusted OOS dates
 merged_df = pd.merge(inb_df, total_df[['Date', 'OOS_Date', 'Actual', 'Max Projected']],
@@ -33,7 +33,7 @@ fig_inb = px.line(inb_df, x='Date', y=['Actual', 'Max Projected'],
 st.plotly_chart(fig_inb)
 
 # Plot actual vs projected OOS% trend
-fig_oos = px.line(total_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
                    labels={'value': 'OOS %', 'variable': 'Type'},
                    title='Actual vs Projected Out-of-Stock Percentage Trend')
 st.plotly_chart(fig_oos)
