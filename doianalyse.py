@@ -25,7 +25,7 @@ merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projec
 
 # Calculate projected OOS% based on inbound quantity ratio
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
-merged_df=merged_df['Date', 'Actual', 'Max Projected','% OOS Contribution','Projected % OOS Contribution']
+merged_df = merged_df[['Date', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 st.dataframe(merged_df)
 
 
