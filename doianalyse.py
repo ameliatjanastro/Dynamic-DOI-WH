@@ -76,11 +76,11 @@ else:
 
 
 # Exclude Landed DOI values greater than 21 before calculating the average
-selected_locations = st.multiselect("Select Location(s):", analisa_df['Location_ID'].unique())
+selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
 
 # Filter the DataFrame based on selected locations
 if selected_locations:
-    filtered_df = analisa_df[analisa_df['Location_ID'].isin(selected_locations)]
+    filtered_df = analisa_df[analisa_df['location_id'].isin(selected_locations)]
 else:
     filtered_df = analisa_df  # If no selection, show all data
 
