@@ -44,7 +44,8 @@ selected_product = st.selectbox("Select Product ID", product_ids)
 filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 
 
-filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].fillna(0)
+filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
+filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
@@ -56,7 +57,7 @@ landed_doi_data = pd.DataFrame({
 
 fig_doi = px.bar(landed_doi_data, x="Value", y="Category", orientation='h',
                  title="Comparison of Landed DOI New vs Old", color="Category",
-                 color_discrete_map={"Landed DOI New": "red", "Landed DOI Old": "green"})
+                 color_discrete_map={"Landed DOI New": "blue", "Landed DOI Old": "gray"})
 
 st.plotly_chart(fig_doi)
 
@@ -68,7 +69,7 @@ rl_qty_data = pd.DataFrame({
 
 fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
                 title="Comparison of RL Qty", color="Category",
-                color_discrete_map={"RL Qty Actual": "red", "RL Qty NEW after MIN QTY WH": "green"})
+                color_discrete_map={"RL Qty Actual": "gray", "RL Qty NEW after MIN QTY WH": "blue"})
 
 st.plotly_chart(fig_rl)
 
