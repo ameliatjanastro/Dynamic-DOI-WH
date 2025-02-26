@@ -25,6 +25,10 @@ merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projec
 
 # Calculate projected OOS% based on inbound quantity ratio
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
+st.dataframe(merged_df)
+
+
+
 
 analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
 analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
