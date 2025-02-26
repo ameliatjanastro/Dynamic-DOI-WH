@@ -76,3 +76,29 @@ ax.set_xlabel('RL Quantity')
 ax.set_title('Comparison of RL Qty')
 ax.grid()
 st.pyplot(fig)
+
+import plotly.express as px
+
+# Landed DOI Comparison
+landed_doi_data = pd.DataFrame({
+    "Category": ["Landed DOI New", "Landed DOI Old"],
+    "Value": [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()]
+})
+
+fig_doi = px.bar(landed_doi_data, x="Value", y="Category", orientation='h',
+                 title="Comparison of Landed DOI New vs Old", color="Category",
+                 color_discrete_map={"Landed DOI New": "red", "Landed DOI Old": "green"})
+
+st.plotly_chart(fig_doi)
+
+# RL Quantity Comparison
+rl_qty_data = pd.DataFrame({
+    "Category": ["RL Qty Actual", "RL Qty NEW after MIN QTY WH"],
+    "Value": [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()]
+})
+
+fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
+                title="Comparison of RL Qty", color="Category",
+                color_discrete_map={"RL Qty Actual": "red", "RL Qty NEW after MIN QTY WH": "green"})
+
+st.plotly_chart(fig_rl)
