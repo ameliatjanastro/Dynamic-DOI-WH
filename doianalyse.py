@@ -93,8 +93,9 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 
+st.markdown("----")
 # Selectbox for choosing which chart to display
-chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity", "Out-of-Stock Percentage"])
+chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
 
 # Display the selected chart
 if chart_option == "Inbound Quantity":
@@ -102,7 +103,7 @@ if chart_option == "Inbound Quantity":
 else:
     st.plotly_chart(fig_oos)
 
-st.markdown("----")
+
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
@@ -110,14 +111,16 @@ col1, col2 = st.columns(2)
 with col1:
     selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
 
-with col2:
-    selected_categories = st.selectbox("Select L1 Category(s):", analisa_df['l1_category_name'].unique())
-
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()  # Start with full DataFrame
 
 if selected_locations:
     filtered_df = filtered_df[filtered_df['location_id'].isin(selected_locations)]
+
+available_categories = filtered_df['l1_category_name'].unique()
+
+with col2:
+    selected_categories = st.selectbox("Select L1 Category(s):", analisa_df['l1_category_name'].unique())
 
 if selected_categories:
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_categories]
