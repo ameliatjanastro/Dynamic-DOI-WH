@@ -64,7 +64,7 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 
 
 fig, ax = plt.subplots(figsize=(10, 5))
-ax.barh(['Landed DOI New', 'Landed DOI OLD'], [analisa_df['Landed DOI New'].mean(), analisa_df['Landed DOI OLD'].mean()], color=['g', 'r'])
+ax.barh(['Landed DOI New', 'Landed DOI OLD'], [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()], color=['g', 'r'])
 ax.set_xlabel('Landed DOI')
 ax.set_title('Comparison of Landed DOI New vs Old')
 ax.grid()
