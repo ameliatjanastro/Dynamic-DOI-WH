@@ -4,7 +4,7 @@ import streamlit as st
 import plotly.express as px
 
 # Streamlit app title
-st.markdown("<h1 style='color: rgb(0, 0, 139);'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: rgb(0, 0, 128);'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
 st.subheader("Overall View")
 st.markdown(" ")
 
