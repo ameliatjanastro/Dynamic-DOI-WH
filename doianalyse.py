@@ -28,7 +28,12 @@ merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (m
 merged_df2 = merged_df[['Date_y', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True) 
 merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
-st.data_editor(merged_df2, hide_index=True)
+col1, col2 = st.columns([1, 3])
+with col2:
+  st.data_editor(merged_df2, hide_index=True)
+with col1:
+    # Text area for notes
+    user_notes = st.text_area("Assumptions:")
 
 
 
@@ -107,9 +112,17 @@ st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
 st.write(f"**Average Landed DOI OLD:** {avg_landed_doi_old:.2f}")
 
 # Product ID filter
-product_ids = analisa_df['product_id'].unique()
-selected_product = st.selectbox("Select Product ID", product_ids)
-filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
+analisa_df["product_display"] = analisa_df["product_id"].astype(str) + " - " + analisa_df["product_name"]
+
+# Create a dictionary to map the display name back to the Product ID
+product_map = dict(zip(analisa_df["product_display"], analisa_df["product_id"]))
+
+# Selectbox with formatted product ID and name
+selected_product_display = st.selectbox("Select Product", list(product_map.keys()))
+
+# Filter the dataframe using the actual Product ID
+selected_product_id = product_map[selected_product_display]
+filtered_df = analisa_df[analisa_df['product_id'] == selected_product_id]
 
 
 filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
