@@ -102,7 +102,8 @@ else:
     st.plotly_chart(fig_oos)
 st.markdown("----")
 
-st.subheader("Landed DOI Comparison (*exc. doi wh + ospo > 100)")
+st.subheader("Landed DOI Comparison")
+st.markdown("*exc. doi wh + ospo > 100")
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
