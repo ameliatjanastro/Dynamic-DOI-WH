@@ -128,7 +128,7 @@ with col1:
         "Value": [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()]
     })
 
-    fig_doi = px.bar(landed_doi_data, x="Value", y="Category", orientation='h',
+    fig_doi = px.bar(landed_doi_data, y="Value", x="Category", orientation='v',
                      title="Comparison of Landed DOI New vs Old", color="Category",
                      color_discrete_map={"Landed DOI New": "green", "Landed DOI Old": "red"})
 
@@ -141,7 +141,7 @@ with col2:
         "Value": [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()]
     })
 
-    fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
+    fig_rl = px.bar(rl_qty_data, y="Value", x="Category", orientation='v',
                     title="Comparison of RL Qty", color="Category",
                     color_discrete_map={"RL Qty Actual": "red", "RL Qty NEW after MIN QTY WH": "green"})
 
