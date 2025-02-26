@@ -25,8 +25,8 @@ merged_df = pd.merge(total_df, inb_df[['Date','OOS_Date', 'Actual', 'Max Project
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
 
 # Display data
-st.subheader("Merged Data Preview")
-st.write(merged_df[['Date', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']].head())
+#st.subheader("Merged Data Preview")
+#st.write(merged_df[['Date', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']].head())
 
     # Plot actual vs projected inbound quantity
 fig, ax = plt.subplots(figsize=(10, 5))
