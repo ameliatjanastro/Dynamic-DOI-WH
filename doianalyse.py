@@ -39,9 +39,9 @@ with col1:
     **Background:**  
     - Data is from cycle 3-6 Feb RL Upload -> Inbound 10-15 Feb.  
     - Assume 2 days buffer SO -> OOS reflected 2 days post Inbound.
-    """
-    - Actual RL: ***974,365***
-    - Projected RL: ***1214,702***
+    
+    - Actual RL: <span style='color: red; font-weight: bold;'>***974,365***</span>
+    - Projected RL: <span style='color: red; font-weight: bold;'>***1214,702***</span>
     """
     st.markdown(notes)
 
