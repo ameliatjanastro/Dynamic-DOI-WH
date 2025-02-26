@@ -4,7 +4,7 @@ import streamlit as st
 import plotly.express as px
 
 # Streamlit app title
-st.markdown("<h1 style='color: red;'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: maroon;'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
 st.subheader("Overall View")
 st.markdown(" ")
 
@@ -36,7 +36,7 @@ with col2:
 with col1:
     # Text area for notes
     notes = """
-    **Notes:**  
+    **Background:**  
     - Data is from cycle 3-6 Feb RL Upload -> Inbound 10-15 Feb.  
     - Assume 2 days buffer SO -> OOS reflected 2 days post Inbound.
     Used Logic: DOI Policy 5 days, No Min SS WH, Cov 14 days
@@ -62,6 +62,7 @@ total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)
 
 # Display the table without an index
 st.markdown("----")
+st.markdown("Below are the list of SKUs that we **did not** order but **would order** with new doi policy:")
 col1, col2 = st.columns([2, 2])
 with col1:
   st.data_editor(filtered_df1, hide_index=True, use_container_width= False)
@@ -72,8 +73,8 @@ with col2:
     - Proposed Logic: DOI Policy L2PO, With Min SS WH, Cov Next Next Inb
     """
     st.markdown(notes)
-    st.write(f"**Total Count SKUs with prevented OOS (ke order sebelumnya tidak):** {total_products}")
-    st.write(f"**Total Sum of Add RL Qty New DOI Policy:** {total_rl_qty_new}")
+    st.write(f"**Count SKUs with potential in preventing OOS occurences:** {total_products}")
+    st.write(f"**Sum of Add. RL Qty with New DOI Policy:** {total_rl_qty_new}")
     
 
 
@@ -101,7 +102,7 @@ if chart_option == "Inbound Quantity":
 else:
     st.plotly_chart(fig_oos)
 
-
+st.markdown("----")
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
