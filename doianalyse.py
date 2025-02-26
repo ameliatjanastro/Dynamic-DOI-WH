@@ -48,6 +48,7 @@ filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
 filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
 filtered_df['RL Qty NEW after MIN QTY WH'] = filtered_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
+analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 # Landed DOI Comparison
