@@ -80,19 +80,19 @@ col1, col2 = st.columns(2)
 
 # Multiselect filters
 with col1:
-    selected_locations = st.multiselect("Select Location(s):", analisa_df['Location_ID'].unique())
+    selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
 
 with col2:
-    selected_categories = st.multiselect("Select L1 Category(s):", analisa_df['L1_Category'].unique())
+    selected_categories = st.multiselect("Select L1 Category(s):", analisa_df['l1_category'].unique())
 
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()  # Start with full DataFrame
 
 if selected_locations:
-    filtered_df = filtered_df[filtered_df['Location_ID'].isin(selected_locations)]
+    filtered_df = filtered_df[filtered_df['location_id'].isin(selected_locations)]
 
 if selected_categories:
-    filtered_df = filtered_df[filtered_df['L1_Category'].isin(selected_categories)]
+    filtered_df = filtered_df[filtered_df['l1_category'].isin(selected_categories)]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
