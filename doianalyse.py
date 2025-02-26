@@ -125,8 +125,8 @@ if selected_categories:
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_categories]
 
 # Apply the DOI filtering
-filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
-filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 21]
+filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 50]
+filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 50]
 
 # Calculate averages
 avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
