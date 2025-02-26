@@ -68,6 +68,7 @@ ax.bar(x_indexes - bar_width/2, filtered_df['RL Qty Actual'], width=bar_width, l
 ax.bar(x_indexes + bar_width/2, filtered_df['RL Qty NEW after MIN QTY WH'], width=bar_width, label='RL Qty NEW after MIN QTY WH', color='m', alpha=0.7)
 ax.set_xlabel('Inbound_Date NEW')
 ax.set_ylabel('RL Quantity')
+ax.set_ylim(0)
 ax.set_title(f'RL Qty Actual vs RL Qty New after MIN QTY WH for Product {selected_product}')
 ax.set_xticks(x_indexes)
 ax.set_xticklabels(filtered_df['Inbound_Date NEW'].dt.strftime('%Y-%m-%d'), rotation=45)
