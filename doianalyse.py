@@ -102,7 +102,7 @@ st.markdown("----")
 chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
 
 # Display the selected chart
-if chart_option == "Inbound Quantity":
+if chart_option == "Inbound Quantity Comparison":
     st.plotly_chart(fig_inb)
 else:
     st.plotly_chart(fig_oos)
