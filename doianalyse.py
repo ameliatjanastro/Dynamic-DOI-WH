@@ -12,9 +12,9 @@ total_df = pd.read_csv("total.csv")
 analisa_df = pd.read_csv("analisa.csv")
 
 # Ensure date columns are in datetime format
-inb_df['Date'] = pd.to_datetime(inb_df['Date'])
-total_df['Date'] = pd.to_datetime(total_df['Date'])
-analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound_Date NEW'])
+inb_df['Date'] = pd.to_date(inb_df['Date'])
+total_df['Date'] = pd.to_date(total_df['Date'])
+analisa_df['Inbound_Date NEW'] = pd.to_date(analisa_df['Inbound_Date NEW'])
 
 # Adjust inbound dates to align with OOS dates (OOS dates = Inb dates +2)
 inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
@@ -25,7 +25,7 @@ merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projec
 
 # Calculate projected OOS% based on inbound quantity ratio
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
-#merged_df = merged_df[['Date', 'OOS_Date', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
+merged_df = merged_df[['Date_y', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 st.dataframe(merged_df)
 
 
@@ -35,7 +35,7 @@ analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
 analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
 analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].apply(pd.to_numeric, errors='coerce')
 analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].apply(pd.to_numeric, errors='coerce')
-analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
+analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(int)
 
 analisa_df2 = analisa_df.copy()
 analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
