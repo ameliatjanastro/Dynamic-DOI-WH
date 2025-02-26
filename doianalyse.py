@@ -40,7 +40,7 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
-filtered_df1 = analisa_df[analisa_df['RL Qty Actual'] == 0][['Product ID', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
+filtered_df1 = analisa_df[analisa_df['RL Qty Actual'] == 0][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
 st.dataframe(filtered_df1)
 
 
