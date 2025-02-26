@@ -30,10 +30,15 @@ merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True)
 merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
 col1, col2 = st.columns([1, 3])
 with col2:
-  st.data_editor(merged_df2, hide_index=True)
+  st.data_editor(merged_df2, hide_index=True, use_container_width = True)
 with col1:
     # Text area for notes
-    user_notes = st.text_area("Assumptions:")
+    notes = """
+    **Notes:**  
+    - Data is from cycle 3-6 Feb RL Upload -> Inbound 10-15 Feb.  
+    - Assume 2 days buffer SO -> OOS reflected 2 days post Inbound.
+    """
+    st.markdown(notes)
 
 
 
