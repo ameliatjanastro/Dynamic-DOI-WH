@@ -51,7 +51,7 @@ st.data_editor(filtered_df1, hide_index=True)
 
 # Show summary at the bottom
 st.write(f"**Total Count SKUs with prevented OOS (ke order sebelumnya tidak):** {total_products}")
-st.write(f"**Total Sum of RL Qty New DOI Policy:** {total_rl_qty_new}")
+st.write(f"**Total Sum of Add RL Qty New DOI Policy:** {total_rl_qty_new}")
 
 # Plot actual vs projected inbound quantity
 
@@ -76,13 +76,23 @@ else:
 
 
 # Exclude Landed DOI values greater than 21 before calculating the average
-selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
+col1, col2 = st.columns(2)
 
-# Filter the DataFrame based on selected locations
+# Multiselect filters
+with col1:
+    selected_locations = st.multiselect("Select Location(s):", analisa_df['Location_ID'].unique())
+
+with col2:
+    selected_categories = st.multiselect("Select L1 Category(s):", analisa_df['L1_Category'].unique())
+
+# Apply filtering based on selections
+filtered_df = analisa_df.copy()  # Start with full DataFrame
+
 if selected_locations:
-    filtered_df = analisa_df[analisa_df['location_id'].isin(selected_locations)]
-else:
-    filtered_df = analisa_df  # If no selection, show all data
+    filtered_df = filtered_df[filtered_df['Location_ID'].isin(selected_locations)]
+
+if selected_categories:
+    filtered_df = filtered_df[filtered_df['L1_Category'].isin(selected_categories)]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
