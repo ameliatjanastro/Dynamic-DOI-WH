@@ -50,18 +50,8 @@ total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)
 st.data_editor(filtered_df1, hide_index=True)
 
 # Show summary at the bottom
-st.write(f"**Total Count SKUs with prevented OOS (keorder sebelumnya tidak):** {total_products}")
+st.write(f"**Total Count SKUs with prevented OOS (ke order sebelumnya tidak):** {total_products}")
 st.write(f"**Total Sum of RL Qty New DOI Policy:** {total_rl_qty_new}")
-
-
-
-# Calculate average RL Quantity across all product IDs
-sum_rl_qty_actual = analisa_df['RL Qty Actual'].sum()
-sum_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
-
-st.write("Total RL Qty Actual:", sum_rl_qty_actual)
-st.write("Total RL Qty New after MIN QTY WH:", sum_rl_qty_new)
-
 
 # Plot actual vs projected inbound quantity
 
@@ -86,14 +76,25 @@ else:
 
 
 # Exclude Landed DOI values greater than 21 before calculating the average
-filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
-filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
+selected_locations = st.multiselect("Select Location(s):", analisa_df['Location_ID'].unique())
 
+# Filter the DataFrame based on selected locations
+if selected_locations:
+    filtered_df = analisa_df[analisa_df['Location_ID'].isin(selected_locations)]
+else:
+    filtered_df = analisa_df  # If no selection, show all data
+
+# Apply the DOI filtering
+filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
+filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 21]
+
+# Calculate averages
 avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
 avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 
-st.write(f"Avg Landed DOI Old: {avg_landed_doi_old:.2f}")
-st.write(f"Avg Landed DOI New: {avg_landed_doi_new:.2f}")
+# Display results with 2 decimal places
+st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
+st.write(f"**Average Landed DOI OLD:** {avg_landed_doi_old:.2f}")
 
 # Product ID filter
 product_ids = analisa_df['product_id'].unique()
