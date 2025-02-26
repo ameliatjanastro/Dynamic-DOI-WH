@@ -95,8 +95,8 @@ st.write(merged_df.head())
 
 # Compare RL Qty, Actual RL Qty, NEW Landed DOI, OLD Landed DOI for each Product ID
 st.subheader("Comparison of RL Qty, Actual RL Qty, Landed DOI OLD, and Landed DOI NEW")
-selected_product = st.selectbox("Select Product ID", merged_df2['Product ID'].unique())
-filtered_data = merged_df2[merged_df2['Product ID'] == selected_product]
+selected_product = st.selectbox("Select Product ID", merged_df2['product_id'].unique())
+filtered_data = merged_df2[merged_df2['product_id'] == selected_product]
 
 fig, ax = plt.subplots(figsize=(12, 6))
 ax.plot(filtered_data['Date'], filtered_data['New_RL_Qty'], label='RL Qty', marker='o')
