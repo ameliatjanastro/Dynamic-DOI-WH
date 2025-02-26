@@ -59,10 +59,11 @@ total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
 
 # Display the table without an index
+st.markdown("----")
 col1, col2 = st.columns([2, 2])
-with col2:
-  st.data_editor(filtered_df1, hide_index=True, use_container_width= False)
 with col1:
+  st.data_editor(filtered_df1, hide_index=True, use_container_width= False)
+with col2:
      # Text area for notes
     notes = """
     - Used Logic: DOI Policy 5 days, No Min SS WH, Cov 14 days
