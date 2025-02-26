@@ -172,7 +172,7 @@ with col1:
 
     fig_doi = px.bar(landed_doi_data, y="Value", x="Category", orientation='v',
                      title="Comparison of Landed DOI New vs Old", color="Category",
-                     color_discrete_map={"Landed DOI New": "green", "Landed DOI Old": "maroon"})
+                     color_discrete_map={"Landed DOI New": "green", "Landed DOI Old": "rgb(255, 153, 153)"})
 
     st.plotly_chart(fig_doi, use_container_width=True)
 
@@ -185,7 +185,7 @@ with col2:
 
     fig_rl = px.bar(rl_qty_data, y="Value", x="Category", orientation='v',
                     title="Comparison of RL Qty", color="Category",
-                    color_discrete_map={"RL Qty Actual": "maroon", "RL Qty NEW after MIN QTY WH": "green"})
+                    color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty NEW after MIN QTY WH": "green"})
 
     st.plotly_chart(fig_rl, use_container_width=True)
 
