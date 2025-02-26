@@ -47,6 +47,7 @@ analisa_df2 = analisa_df.copy()
 # Calculate average RL Quantity across all product IDs
 sum_rl_qty_actual = analisa_df2['RL Qty Actual'].sum()
 sum_rl_qty_new = analisa_df2['RL Qty NEW after MIN QTY WH'].sum()
+st.dataframe(analisa_df2[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']])
 st.write("Total RL Qty Actual:", sum_rl_qty_actual)
 st.write("Total RL Qty New after MIN QTY WH:", sum_rl_qty_new)
 
