@@ -38,8 +38,10 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                    title='Actual vs Projected Out-of-Stock Percentage Trend')
 st.plotly_chart(fig_oos)
 
-
+analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
+analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
 analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
+analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 # Calculate average RL Quantity across all product IDs
 sum_rl_qty_actual = analisa_df['RL Qty Actual'].sum()
 sum_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
@@ -60,7 +62,6 @@ filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
 filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
 filtered_df['RL Qty NEW after MIN QTY WH'] = filtered_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
-
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 # Landed DOI Comparison
