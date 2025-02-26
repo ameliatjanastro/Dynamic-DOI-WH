@@ -130,11 +130,11 @@ filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 21]
 
 # Calculate averages
 avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
-avg_landed_doi_old = filtered_doi_old_df['Landed DOI Old'].mean()
+avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 
 # Display results with 2 decimal places
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
-st.write(f"**Average Landed DOI OLD:** {avg_landed_doi_old:.2f}")
+st.write(f"**Average Landed DOI Oid:** {avg_landed_doi_old:.2f}")
 
 # Product ID filter
 st.markdown("----")
