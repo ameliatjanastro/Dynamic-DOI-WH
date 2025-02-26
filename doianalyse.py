@@ -58,7 +58,7 @@ st.pyplot(fig)
 # Compare RL Qty Actual vs RL Qty New after MIN QTY WH
 fig, ax = plt.subplots(figsize=(10, 5))
 ax.plot(analisa_df['Inbound_Date NEW'], analisa_df['RL Qty Actual'], label='RL Qty Actual', marker='o', color='b')
-ax.plot(analisa_df['Inbound_Date NEW'], analisa_df['RL Qty New after MIN QTY WH'], label='RL Qty New after MIN QTY WH', marker='s', color='m')
+ax.plot(analisa_df['Inbound_Date NEW'], analisa_df['RL Qty NEW after MIN QTY WH'], label='RL Qty New after MIN QTY WH', marker='s', color='m')
 ax.set_xlabel('Date')
 ax.set_ylabel('RL Quantity')
 ax.set_title('RL Qty Actual vs RL Qty New after MIN QTY WH')
