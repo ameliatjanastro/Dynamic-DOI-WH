@@ -70,3 +70,13 @@ fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
 
 st.plotly_chart(fig_rl)
 
+# Calculate average RL Quantity across all product IDs
+avg_rl_qty_actual = analisa_df['RL Qty Actual'].mean()
+avg_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].mean()
+
+# Exclude Landed DOI values greater than 21 before calculating the average
+filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
+filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
+
+avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
+avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
