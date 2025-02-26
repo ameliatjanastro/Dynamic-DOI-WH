@@ -32,6 +32,8 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 analisa_df2 = analisa_df.copy()
+analisa_df2['RL Qty Actual'] = analisa_df2['RL Qty Actual'].fillna(0)
+analisa_df2['RL Qty NEW after MIN QTY WH'] = analisa_df2['RL Qty NEW after MIN QTY WH'].fillna(0)
 # Calculate average RL Quantity across all product IDs
 sum_rl_qty_actual = analisa_df2['RL Qty Actual'].sum()
 sum_rl_qty_new = analisa_df2['RL Qty NEW after MIN QTY WH'].sum()
