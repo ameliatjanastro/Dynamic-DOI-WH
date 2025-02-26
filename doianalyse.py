@@ -99,12 +99,12 @@ selected_product = st.selectbox("Select Product ID", merged_df2['product_id'].un
 filtered_data = merged_df2[merged_df2['product_id'] == selected_product]
 
 fig, ax = plt.subplots(figsize=(12, 6))
-ax.plot(filtered_data['Date'], filtered_data['New_RL_Qty'], label='RL Qty', marker='o')
-ax.plot(filtered_data['Date'], filtered_data['RL Qty Actual'], label='Actual RL Qty', marker='s')
-ax.plot(filtered_data['Date'], filtered_data['Landed DOI OLD'], label='Landed DOI OLD', marker='d')
-ax.plot(filtered_data['Date'], filtered_data['Landed DOI New'], label='Landed DOI New', marker='x')
+ax.plot(filtered_data['rl date'], filtered_data['New_RL_Qty'], label='RL Qty', marker='o')
+ax.plot(filtered_data['rl date'], filtered_data['RL Qty Actual'], label='Actual RL Qty', marker='s')
+ax.plot(filtered_data['rl date'], filtered_data['Landed DOI OLD'], label='Landed DOI OLD', marker='d')
+ax.plot(filtered_data['rl date'], filtered_data['Landed DOI New'], label='Landed DOI New', marker='x')
 
-ax.set_xlabel('Date')
+ax.set_xlabel('rl date')
 ax.set_ylabel('Quantity / DOI')
 ax.set_title(f'Comparison for Product ID: {selected_product}')
 ax.legend()
