@@ -19,7 +19,7 @@ inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
 
     # Merge inbound data with total data on adjusted OOS dates
 merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projected']],
-                         left_on='OOS_Date', right_on='Date', how='left')
+                         left_on='Date', right_on='OOS_Date', how='left')
 
     # Calculate projected OOS% based on inbound quantity ratio
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
