@@ -44,14 +44,14 @@ filtered_df1 = analisa_df[(analisa_df['RL Qty Actual'] == 0) & (analisa_df['RL Q
 
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
-total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum()  # Sum of RL Qty NEW
+total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
 
 # Display the table without an index
 st.data_editor(filtered_df1, hide_index=True)
 
 # Show summary at the bottom
-st.write(f"**Total Count SKUs with prevented OOS:** {total_products}")
-st.write(f"**Total Sum of RL Qty NEW:** {total_rl_qty_new}")
+st.write(f"**Total Count SKUs with prevented OOS (keorder sebelumnya tidak):** {total_products}")
+st.write(f"**Total Sum of RL Qty New DOI Policy:** {total_rl_qty_new}")
 
 
 
