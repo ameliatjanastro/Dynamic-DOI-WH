@@ -96,8 +96,8 @@ selected_product = st.selectbox("Select Product ID", merged_df['Product ID'].uni
 filtered_data = merged_df[merged_df['Product ID'] == selected_product]
 
 fig, ax = plt.subplots(figsize=(12, 6))
-ax.plot(filtered_data['Date'], filtered_data['RL Qty'], label='RL Qty', marker='o')
-ax.plot(filtered_data['Date'], filtered_data['Actual RL Qty'], label='Actual RL Qty', marker='s')
+ax.plot(filtered_data['Date'], filtered_data['New_RL_Qty'], label='RL Qty', marker='o')
+ax.plot(filtered_data['Date'], filtered_data['RL Qty Actual'], label='Actual RL Qty', marker='s')
 ax.plot(filtered_data['Date'], filtered_data['Landed DOI OLD'], label='Landed DOI OLD', marker='d')
 ax.plot(filtered_data['Date'], filtered_data['Landed DOI New'], label='Landed DOI New', marker='x')
 
