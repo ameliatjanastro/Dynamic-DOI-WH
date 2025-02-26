@@ -27,13 +27,13 @@ merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projec
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
 
 # Plot actual vs projected inbound quantity
-fig_inb = px.line(merged_df, x='Date', y=['Actual', 'Max Projected'],
+fig_inb = px.line(inb_df, x='Date', y=['Actual', 'Max Projected'],
                    labels={'value': 'Inbound Quantity', 'variable': 'Type'},
                    title='Actual vs Projected Inbound Quantity')
 st.plotly_chart(fig_inb)
 
 # Plot actual vs projected OOS% trend
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+fig_oos = px.line(total_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
                    labels={'value': 'OOS %', 'variable': 'Type'},
                    title='Actual vs Projected Out-of-Stock Percentage Trend')
 st.plotly_chart(fig_oos)
