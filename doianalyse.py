@@ -76,6 +76,24 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                    title='Actual vs Projected Out-of-Stock Percentage Trend')
 st.plotly_chart(fig_oos)
 
+fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
+                 labels={'value': 'Inbound Quantity', 'variable': 'Type'},
+                 title='Actual vs Projected Inbound Quantity',
+                 barmode='group')
+
+# Create the OOS percentage line chart
+fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+                  labels={'value': 'OOS %', 'variable': 'Type'},
+                  title='Actual vs Projected Out-of-Stock Percentage Trend')
+
+# Selectbox for choosing which chart to display
+chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity", "Out-of-Stock Percentage"])
+
+# Display the selected chart
+if chart_option == "Inbound Quantity":
+    st.plotly_chart(fig_inb)
+else:
+    st.plotly_chart(fig_oos)
 
 
 # Exclude Landed DOI values greater than 21 before calculating the average
