@@ -35,15 +35,14 @@ with col2:
   st.data_editor(merged_df2, hide_index=True, use_container_width = True)
 with col1:
     # Text area for notes
-    notes = """
-    **Background:**  
-    - Data is from cycle 3-6 Feb RL Upload -> Inbound 10-15 Feb.  
-    - Assume 2 days buffer SO -> OOS reflected 2 days post Inbound.
-    
-    - Actual RL: <span style='color: red; font-weight: bold;'>***974,365***</span>
-    - Projected RL: <span style='color: red; font-weight: bold;'>***1214,702***</span>
-    """
-    st.markdown(notes)
+    st.markdown("""
+  **Background:**  
+  - Data is from cycle 3-6 Feb RL Upload -> Inbound 10-15 Feb.  
+  - Assume 2 days buffer SO -> OOS reflected 2 days post Inbound.  
+
+  - Actual RL: <span style='color: red; font-weight: bold;'>974,365</span>  
+  - Projected RL: <span style='color: green; font-weight: bold;'>1,214,702</span>  
+  """, unsafe_allow_html=True)
 
 
 
