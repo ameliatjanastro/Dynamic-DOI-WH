@@ -27,6 +27,7 @@ merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projec
 merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
 merged_df2 = merged_df[['Date_y', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True) 
+merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
 st.dataframe(merged_df2)
 
 
@@ -38,6 +39,10 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 
 analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
+
+st.write("Non-numeric values in RL Qty Actual:", analisa_df[pd.to_numeric(analisa_df['RL Qty Actual'], errors='coerce').isna()])
+st.write("Non-numeric values in RL Qty NEW after MIN QTY WH:", analisa_df[pd.to_numeric(analisa_df['RL Qty NEW after MIN QTY WH'], errors='coerce').isna()])
+
 # Calculate average RL Quantity across all product IDs
 sum_rl_qty_actual = analisa_df['RL Qty Actual'].sum()
 sum_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
