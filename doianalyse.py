@@ -98,7 +98,7 @@ st.subheader("Comparison of RL Qty, Actual RL Qty, Landed DOI OLD, and Landed DO
 selected_product = st.selectbox("Select Product ID", merged_df2['product_id'].unique())
 filtered_data = merged_df2[merged_df2['product_id'] == selected_product]
 
-for product_id, group in merged_df.groupby('Product ID'):
+for product_id, group in merged_df.groupby('product_id'):
     ax.plot(group['rl date'], group['RL Qty NEW after MIN QTY WH'], label=f'RL Qty - {product_id}', marker='o')
     ax.plot(group['rl date'], group['RL Qty Actual'], label=f'Actual RL Qty - {product_id}', marker='s')
     ax.plot(group['rl date'], group['Landed DOI OLD'], label=f'Landed DOI OLD - {product_id}', marker='d')
