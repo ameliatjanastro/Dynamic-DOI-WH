@@ -25,6 +25,8 @@ inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
 merged_df = pd.merge(total_df, inb_df[['OOS_Date', 'Actual', 'Max Projected']],
                      left_on='Date', right_on='OOS_Date', how='left')
 
+merged_df = pd.merge(merged_df, analisa_df, on='Product ID', how='left')
+
 # Filter projected OOS% calculations for 12 Feb - 17 Feb
 #projection_dates = (merged_df['Date'] >= '2025-02-10') & (merged_df['Date'] <= '2025-02-15')
 merged_df[ 'Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
