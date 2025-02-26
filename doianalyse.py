@@ -58,7 +58,7 @@ landed_doi_data = pd.DataFrame({
 
 fig_doi = px.bar(landed_doi_data, x="Value", y="Category", orientation='h',
                  title="Comparison of Landed DOI New vs Old", color="Category",
-                 color_discrete_map={"Landed DOI New": "blue", "Landed DOI Old": "gray"})
+                 color_discrete_map={"Landed DOI New": "green", "Landed DOI Old": "red"})
 
 st.plotly_chart(fig_doi)
 
@@ -70,13 +70,13 @@ rl_qty_data = pd.DataFrame({
 
 fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
                 title="Comparison of RL Qty", color="Category",
-                color_discrete_map={"RL Qty Actual": "gray", "RL Qty NEW after MIN QTY WH": "blue"})
+                color_discrete_map={"RL Qty Actual": "red", "RL Qty NEW after MIN QTY WH": "green"})
 
 st.plotly_chart(fig_rl)
 
 # Calculate average RL Quantity across all product IDs
-avg_rl_qty_actual = analisa_df['RL Qty Actual'].mean()
-avg_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].mean()
+sum_rl_qty_actual = analisa_df['RL Qty Actual'].sum()
+sum_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
 
 # Exclude Landed DOI values greater than 21 before calculating the average
 filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
