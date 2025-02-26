@@ -124,7 +124,7 @@ with col2:
     selected_categories = st.selectbox("Select L1 Category(s):", analisa_df['l1_category_name'].unique())
 
 if selected_categories:
-    filtered_df = filtered_df[filtered_df['l1_category_name'] == available_categories_categories]
+    filtered_df = filtered_df[filtered_df['l1_category_name'] == available_categories]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
