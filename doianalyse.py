@@ -6,6 +6,8 @@ import plotly.express as px
 # Streamlit app title
 st.title("Inbound vs OOS Analysis")
 
+st.subheader("Overall View")
+
 # Load CSV files
 inb_df = pd.read_csv("inb.csv")
 total_df = pd.read_csv("total.csv")
