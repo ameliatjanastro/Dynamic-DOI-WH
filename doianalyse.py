@@ -56,7 +56,7 @@ ax.grid()
 st.pyplot(fig)
 
 # Product ID filter
-product_ids = analisa_df['Product ID'].unique()
+product_ids = analisa_df['product_id'].unique()
 selected_product = st.selectbox("Select Product ID", product_ids)
 filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 
