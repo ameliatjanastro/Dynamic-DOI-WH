@@ -62,7 +62,7 @@ filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 
 # Compare RL Qty Actual vs RL Qty New after MIN QTY WH as bar chart
 fig, ax = plt.subplots(figsize=(10, 5))
-x_indexes = np.arange(len(filtered_df['Inbound_Date NEW']))
+x_indexes = np.arange(len(filtered_df))
 bar_width = 0.4
 ax.bar(x_indexes - bar_width/2, filtered_df['RL Qty Actual'], width=bar_width, label='RL Qty Actual', color='b', alpha=0.7)
 ax.bar(x_indexes + bar_width/2, filtered_df['RL Qty NEW after MIN QTY WH'], width=bar_width, label='RL Qty NEW after MIN QTY WH', color='m', alpha=0.7)
