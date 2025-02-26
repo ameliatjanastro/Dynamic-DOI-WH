@@ -119,27 +119,32 @@ filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 # Landed DOI Comparison
-landed_doi_data = pd.DataFrame({
-    "Category": ["Landed DOI New", "Landed DOI Old"],
-    "Value": [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()]
-})
+col1, col2 = st.columns(2)
 
-fig_doi = px.bar(landed_doi_data, x="Value", y="Category", orientation='h',
-                 title="Comparison of Landed DOI New vs Old", color="Category",
-                 color_discrete_map={"Landed DOI New": "green", "Landed DOI Old": "red"})
+# Landed DOI Comparison
+with col1:
+    landed_doi_data = pd.DataFrame({
+        "Category": ["Landed DOI New", "Landed DOI Old"],
+        "Value": [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()]
+    })
 
-st.plotly_chart(fig_doi)
+    fig_doi = px.bar(landed_doi_data, x="Value", y="Category", orientation='h',
+                     title="Comparison of Landed DOI New vs Old", color="Category",
+                     color_discrete_map={"Landed DOI New": "green", "Landed DOI Old": "red"})
+
+    st.plotly_chart(fig_doi, use_container_width=True)
 
 # RL Quantity Comparison
-rl_qty_data = pd.DataFrame({
-    "Category": ["RL Qty Actual", "RL Qty NEW after MIN QTY WH"],
-    "Value": [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()]
-})
+with col2:
+    rl_qty_data = pd.DataFrame({
+        "Category": ["RL Qty Actual", "RL Qty NEW after MIN QTY WH"],
+        "Value": [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()]
+    })
 
-fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
-                title="Comparison of RL Qty", color="Category",
-                color_discrete_map={"RL Qty Actual": "red", "RL Qty NEW after MIN QTY WH": "green"})
+    fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
+                    title="Comparison of RL Qty", color="Category",
+                    color_discrete_map={"RL Qty Actual": "red", "RL Qty NEW after MIN QTY WH": "green"})
 
-st.plotly_chart(fig_rl)
+    st.plotly_chart(fig_rl, use_container_width=True)
 
 
