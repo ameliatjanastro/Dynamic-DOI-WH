@@ -61,7 +61,7 @@ selected_product = st.selectbox("Select Product ID", product_ids)
 filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
-
+filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 fig, ax = plt.subplots(figsize=(10, 5))
 ax.barh(['Landed DOI New', 'Landed DOI OLD'], [filtered_df['Landed DOI New'].mean(), filtered_df['Landed DOI OLD'].mean()], color=['r', 'g'])
