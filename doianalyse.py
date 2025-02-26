@@ -7,13 +7,13 @@ import streamlit as st
 st.title("Inbound vs OOS Analysis")
 
 # Upload CSV files
-inb_file = st.file_uploader("Upload Inbound CSV", type=["csv"])
-total_file = st.file_uploader("Upload Total CSV", type=["csv"])
+#inb_file = st.file_uploader("Upload Inbound CSV", type=["csv"])
+#total_file = st.file_uploader("Upload Total CSV", type=["csv"])
 
 if inb_file and total_file:
     # Load the data
-    inb_df = pd.read_csv(inb_file)
-    total_df = pd.read_csv(total_file)
+    inb_df = pd.read_csv("inb.csv")
+    total_df = pd.read_csv("total.csv")
 
     # Ensure date columns are in datetime format
     inb_df['Date'] = pd.to_datetime(inb_df['Date'])
