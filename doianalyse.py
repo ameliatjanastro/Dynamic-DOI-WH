@@ -70,7 +70,7 @@ ax.set_title('Comparison of Landed DOI New vs Old')
 ax.grid()
 st.pyplot(fig)
 
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots(figsize=(9, 5))
 ax.barh(['RL Qty Actual', 'RL Qty NEW after MIN QTY WH'], [filtered_df['RL Qty Actual'], filtered_df['RL Qty NEW after MIN QTY WH']], color=['r', 'g'])
 ax.set_xlabel('RL Quantity')
 ax.set_title('Comparison of RL Qty')
