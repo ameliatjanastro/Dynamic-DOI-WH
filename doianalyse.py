@@ -102,7 +102,7 @@ else:
     st.plotly_chart(fig_oos)
 st.markdown("----")
 
-st.subheader("Landed DOI Comparison")
+st.subheader("Landed DOI Comparison (*exc. doi wh + ospo > 100)")
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
@@ -125,8 +125,8 @@ if selected_categories:
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_categories]
 
 # Apply the DOI filtering
-filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 50]
-filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 50]
+filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 100]
+filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 100]
 
 # Calculate averages
 avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
