@@ -60,6 +60,13 @@ product_ids = analisa_df['product_id'].unique()
 selected_product = st.selectbox("Select Product ID", product_ids)
 filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.barh(['Landed DOI New', 'Landed DOI OLD'], [analisa_df['Landed DOI New'].mean(), analisa_df['Landed DOI Old'].mean()], color=['g', 'r'])
+ax.set_xlabel('Landed DOI')
+ax.set_title('Comparison of Landed DOI New vs Old')
+ax.grid()
+st.pyplot(fig)
+
 # Compare RL Qty Actual vs RL Qty New after MIN QTY WH as bar chart
 fig, ax = plt.subplots(figsize=(10, 5))
 x_indexes = np.arange(len(filtered_df))
