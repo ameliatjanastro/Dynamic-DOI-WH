@@ -102,8 +102,9 @@ if chart_option == "Inbound Quantity":
     st.plotly_chart(fig_inb)
 else:
     st.plotly_chart(fig_oos)
+st.markdown("----")
 
-
+st.subheader("Landed DOI Comparison")
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
@@ -123,7 +124,7 @@ with col2:
     selected_categories = st.selectbox("Select L1 Category(s):", analisa_df['l1_category_name'].unique())
 
 if selected_categories:
-    filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_categories]
+    filtered_df = filtered_df[filtered_df['l1_category_name'] == available_categories_categories]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 21]
