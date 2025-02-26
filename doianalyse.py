@@ -20,7 +20,7 @@ analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound_Date NEW'])
 total_df['OOS_Date'] = total_df['Date'] + pd.Timedelta(days=2)
 
 # Merge inbound data with total data on adjusted OOS dates
-merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projected']],
+merged_df = pd.merge(inb_df, total_df[['Date', 'OOS_Date', 'Actual', 'Max Projected']],
                      left_on='Date', right_on='OOS_Date', how='left')
 
 # Calculate projected OOS% based on inbound quantity ratio
