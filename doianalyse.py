@@ -86,11 +86,15 @@ else:
 
 
 # Exclude Landed DOI values greater than 21 before calculating the average
-#filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
-#filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
+filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
+filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
 
-#avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
-#avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
+avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
+avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
+
+st.write("Avg Landed DOI Old:", avg_landed_doi_old)
+st.write("Avg Landed DOI New:", avg_landed_doi_new)
+
 # Product ID filter
 product_ids = analisa_df['product_id'].unique()
 selected_product = st.selectbox("Select Product ID", product_ids)
