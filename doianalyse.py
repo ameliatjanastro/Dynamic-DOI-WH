@@ -53,10 +53,13 @@ analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
 filtered_df1 = analisa_df[(analisa_df['RL Qty Actual'] == 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] != 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
+filtered_df2 = analisa_df[(analisa_df['RL Qty Actual'] != 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] == 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
+
 
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
+total_rl_qty_old = filtered_df2['RL Qty Old'].sum().astype(int)
 
 # Display the table without an index
 st.markdown("----")
@@ -73,6 +76,7 @@ with col2:
     st.markdown(notes)
     st.write(f"**Count SKUs with potential in preventing OOS occurences:** {total_products}")
     st.write(f"**Sum of Add. RL Qty with New DOI Policy:** {total_rl_qty_new}")
+    st.write(f"**Sum of RL Qty yang jadi gaorder:** {total_rl_qty_old}")
     
 
 
