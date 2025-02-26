@@ -43,9 +43,11 @@ product_ids = analisa_df['product_id'].unique()
 selected_product = st.selectbox("Select Product ID", product_ids)
 filtered_df = analisa_df[analisa_df['product_id'] == selected_product]
 
+
+filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].fillna(0)
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
-filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].fillna(0)
+
 # Landed DOI Comparison
 landed_doi_data = pd.DataFrame({
     "Category": ["Landed DOI New", "Landed DOI Old"],
