@@ -38,6 +38,18 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                    title='Actual vs Projected Out-of-Stock Percentage Trend')
 st.plotly_chart(fig_oos)
 
+
+analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
+# Calculate average RL Quantity across all product IDs
+sum_rl_qty_actual = analisa_df['RL Qty Actual'].sum()
+sum_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
+
+# Exclude Landed DOI values greater than 21 before calculating the average
+filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
+filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
+
+avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
+avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 # Product ID filter
 product_ids = analisa_df['product_id'].unique()
 selected_product = st.selectbox("Select Product ID", product_ids)
@@ -48,7 +60,7 @@ filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
 filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
 filtered_df['RL Qty NEW after MIN QTY WH'] = filtered_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
-analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
+
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 # Landed DOI Comparison
@@ -75,13 +87,4 @@ fig_rl = px.bar(rl_qty_data, x="Value", y="Category", orientation='h',
 
 st.plotly_chart(fig_rl)
 
-# Calculate average RL Quantity across all product IDs
-sum_rl_qty_actual = analisa_df['RL Qty Actual'].sum()
-sum_rl_qty_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
 
-# Exclude Landed DOI values greater than 21 before calculating the average
-filtered_doi_df = analisa_df[analisa_df['Landed DOI New'] <= 21]
-filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
-
-avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
-avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
