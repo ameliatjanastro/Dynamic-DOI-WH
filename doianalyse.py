@@ -92,8 +92,8 @@ filtered_doi_old_df = analisa_df[analisa_df['Landed DOI OLD'] <= 21]
 avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
 avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 
-st.write(f"Avg Landed DOI Old: {avg_landed_doi_old.2f}")
-st.write(f"Avg Landed DOI New: {avg_landed_doi_new.2f}")
+st.write(f"Avg Landed DOI Old: {avg_landed_doi_old:.2f}")
+st.write(f"Avg Landed DOI New: {avg_landed_doi_new:.2f}")
 
 # Product ID filter
 product_ids = analisa_df['product_id'].unique()
