@@ -28,7 +28,7 @@ merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (m
 merged_df2 = merged_df[['Date_y', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True) 
 merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
-st.dataframe(merged_df2.style.hide(axis="index"))
+st.data_editor(merged_df2, hide_index=True)
 
 
 
@@ -47,7 +47,7 @@ total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum()  # Sum of RL Qty NEW
 
 # Display the table without an index
-st.dataframe(filtered_df1.style.hide(axis="index"))
+st.data_editor(filtered_df1, hide_index=True)
 
 # Show summary at the bottom
 st.write(f"**Total Count SKUs with prevented OOS:** {total_products}")
