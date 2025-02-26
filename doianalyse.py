@@ -4,7 +4,7 @@ import streamlit as st
 import plotly.express as px
 
 # Streamlit app title
-st.title("Inbound vs OOS Analysis aa")
+st.title("Inbound vs OOS Analysis")
 
 # Load CSV files
 inb_df = pd.read_csv("inb.csv")
