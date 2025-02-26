@@ -17,7 +17,7 @@ total_df['Date'] = pd.to_datetime(total_df['Date'])
 analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound_Date NEW'])
 
 # Adjust inbound dates to align with OOS dates (OOS dates = Inb dates +2)
-inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
+total_df['OOS_Date'] = total_df['Date'] + pd.Timedelta(days=2)
 
 # Merge inbound data with total data on adjusted OOS dates
 merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projected']],
