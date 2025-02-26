@@ -28,7 +28,7 @@ merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (m
 merged_df2 = merged_df[['Date_y', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True) 
 merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
-st.dataframe(merged_df2)
+st.dataframe(merged_df2.style.hide(axis="index"))
 
 
 
@@ -40,8 +40,20 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
-filtered_df1 = analisa_df[analisa_df['RL Qty Actual'] == 0][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
-st.dataframe(filtered_df1)
+filtered_df1 = analisa_df[
+    (analisa_df['RL Qty Actual'] == 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] != 0)
+][['Product ID', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
+
+# Calculate summary statistics
+total_products = filtered_df1['Product ID'].nunique()  # Count unique products
+total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum()  # Sum of RL Qty NEW
+
+# Display the table without an index
+st.dataframe(filtered_df1.style.hide(axis="index"))
+
+# Show summary at the bottom
+st.write(f"**Total Count SKUs with prevented OOS:** {total_products}")
+st.write(f"**Total Sum of RL Qty NEW:** {total_rl_qty_new}")
 
 
 
