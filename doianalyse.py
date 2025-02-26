@@ -83,7 +83,7 @@ with col1:
     selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
 
 with col2:
-    selected_categories = st.multiselect("Select L1 Category(s):", analisa_df['l1_category_name'].unique())
+    selected_categories = st.selectbox("Select L1 Category(s):", analisa_df['l1_category_name'].unique())
 
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()  # Start with full DataFrame
