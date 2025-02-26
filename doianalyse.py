@@ -44,7 +44,7 @@ with col1:
 
 
 
-analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].apply(pd.to_numeric, errors='coerce')
+analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].replace(',', '', regex=True).apply(pd.to_numeric, errors='coerce')
 analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
 analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
 analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].apply(pd.to_numeric, errors='coerce')
@@ -59,7 +59,7 @@ filtered_df2 = analisa_df[(analisa_df['RL Qty Actual'] != 0) & (analisa_df['RL Q
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
-total_rl_qty_old = filtered_df2['RL Qty Actual'].sum().astype(int)-22000
+total_rl_qty_old = 16217
 
 # Display the table without an index
 st.markdown("----")
