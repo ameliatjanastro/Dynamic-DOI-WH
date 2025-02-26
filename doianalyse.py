@@ -113,5 +113,5 @@ st.pyplot(fig)
 
 # Average Landed DOI comparison by Location ID
 st.subheader("Average Landed DOI by Location ID")
-avg_doi = merged_df.groupby('Location ID')[['Landed DOI OLD', 'Landed DOI New']].mean()
+avg_doi = merged_df.groupby('location_id')[['Landed DOI OLD', 'Landed DOI New']].mean()
 st.write(avg_doi)
