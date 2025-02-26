@@ -65,17 +65,6 @@ st.write("Total RL Qty New after MIN QTY WH:", sum_rl_qty_new)
 
 # Plot actual vs projected inbound quantity
 
-fig_inb = px.line(inb_df, x='Date', y=['Actual', 'Max Projected'],
-                   labels={'value': 'Inbound Quantity', 'variable': 'Type'},
-                   title='Actual vs Projected Inbound Quantity')
-st.plotly_chart(fig_inb)
-
-# Plot actual vs projected OOS% trend
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
-                   labels={'value': 'OOS %', 'variable': 'Type'},
-                   title='Actual vs Projected Out-of-Stock Percentage Trend')
-st.plotly_chart(fig_oos)
-
 fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
                  labels={'value': 'Inbound Quantity', 'variable': 'Type'},
                  title='Actual vs Projected Inbound Quantity',
