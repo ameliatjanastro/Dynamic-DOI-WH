@@ -37,6 +37,8 @@ with col1:
     **Notes:**  
     - Data is from cycle 3-6 Feb RL Upload -> Inbound 10-15 Feb.  
     - Assume 2 days buffer SO -> OOS reflected 2 days post Inbound.
+    Used Logic: DOI Policy 5 days, No Min SS WH, Cov 14 days
+    Proposed Logic: DOI Policy L2PO, With Min SS WH, Cov Next Next Inb
     """
     st.markdown(notes)
 
@@ -57,7 +59,17 @@ total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
 
 # Display the table without an index
-st.data_editor(filtered_df1, hide_index=True)
+col1, col2 = st.columns([1, 3])
+with col2:
+  st.data_editor(filtered_df1, hide_index=True, use_container_width= False)
+with col1:
+     # Text area for notes
+    notes = """
+    Used Logic: DOI Policy 5 days, No Min SS WH, Cov 14 days
+    Proposed Logic: DOI Policy L2PO, With Min SS WH, Cov Next Next Inb
+    """
+    st.markdown(notes)
+
 
 # Show summary at the bottom
 st.write(f"**Total Count SKUs with prevented OOS (ke order sebelumnya tidak):** {total_products}")
