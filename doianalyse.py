@@ -78,7 +78,7 @@ with col2:
     """
     st.markdown(notes)
     st.write(f"**Count SKUs with potential in preventing OOS occurences:** {total_products}")
-    st.write(f"**Sum of Add. RL Qty with New DOI Policy:** {total_rl_qty_new}")
+    st.write(f"**Sum of Add. RL Qty with New DOI Policy:** <span style='color: green;'>{total_rl_qty_new}</span>", unsafe_allow_html=True)
     st.write(f"**Sum of RL Qty yang jadi gaorder:** {total_rl_qty_old}")
     
 
