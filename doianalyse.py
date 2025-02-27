@@ -109,7 +109,7 @@ else:
 st.markdown("----")
 
 st.subheader("Landed DOI Comparison")
-st.markdown("*exc. doi wh + ospo > 100*")
+st.markdown("*exc. current doi wh + ospo > 100*")
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
