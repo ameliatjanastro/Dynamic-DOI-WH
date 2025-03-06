@@ -139,7 +139,7 @@ filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 100]
 filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 100]
 
 # Calculate averages
-avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()*0.9
+avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()*0.8
 avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 
 # Display results with 2 decimal places
