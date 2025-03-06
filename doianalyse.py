@@ -63,6 +63,7 @@ filtered_df2 = analisa_df[(analisa_df['RL Qty Actual'] != 0) & (analisa_df['RL Q
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
 total_rl_qty_old = filtered_df2['RL Qty Actual'].sum().astype(int)
+landed_doi_yg_gaorder = filtered_df2['Landed DOI New'].mean().astype(float)
 
 # Display the table without an index
 st.markdown("----")
@@ -80,6 +81,7 @@ with col2:
     st.write(f"**Count SKUs with potential in preventing OOS occurences:** {total_products}")
     st.write(f"**Sum of Add. RL Qty with New DOI Policy:** <span style='color: green;'>{total_rl_qty_new}</span>", unsafe_allow_html=True)
     st.write(f"**Sum of RL Qty yang jadi gaorder:** {total_rl_qty_old}")
+    st.write(f"**Blended DOI yg gaorder:** {landed_doi_yg_gaorder}")
     
 
 
@@ -137,7 +139,7 @@ filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 100]
 filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 100]
 
 # Calculate averages
-avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()
+avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()*0.7
 avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 
 # Display results with 2 decimal places
