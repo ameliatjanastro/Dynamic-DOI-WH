@@ -56,7 +56,7 @@ analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
 filtered_df1 = analisa_df[(analisa_df['RL Qty Actual'] == 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] != 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
-filtered_df2 = analisa_df[(analisa_df['RL Qty Actual'] != 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] == 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
+filtered_df2 = analisa_df[(analisa_df['RL Qty Actual'] != 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] == 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Landed DOI New']]
 
 
 # Calculate summary statistics
