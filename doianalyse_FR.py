@@ -156,7 +156,7 @@ with col1:
 filtered_df = analisa_df.copy()
 
 if selected_locations:
-    filtered_df = filtered_df[filtered_df['location_id']== selected_locations)]
+    filtered_df = filtered_df[filtered_df['location_id']== selected_locations]
 
 # Get unique categories and add "All" option
 available_categories = ["All"] + list(filtered_df['l1_category_name'].unique())
