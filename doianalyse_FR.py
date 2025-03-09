@@ -42,7 +42,7 @@ st.markdown(
 
 # Streamlit app title
 st.markdown("<h1 style='color: rgb(0, 0, 128);'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
-st.subheader("<h4 style='color: rgb(0, 0, 128);'>Overall View</h4>")
+st.markdown("<h4 style='color: rgb(128, 128, 128);'>Overall View</h4>")
 st.markdown(" ")
 
 # Load CSV files
@@ -348,7 +348,7 @@ st.dataframe(styled_df)
 # Product ID filter
 st.markdown("----")
 
-st.subheader("<h4 style='color: rgb(0, 0, 128);'>SKU Level View</h4>")
+st.markddown("<h4 style='color: rgb(128, 128, 128);'>SKU Level View</h4>")
 # Create a separate DataFrame for SKU Level View
 filtered_sku_df = analisa_df.copy()
 
