@@ -360,7 +360,7 @@ filtered_sku_df.loc[high_diff_mask2, 'Landed DOI New Adjusted'] *= 0.9  # Reduce
 filtered_sku_df["product_display"] =  filtered_sku_df["product_id"].astype(str) + " - " +  filtered_sku_df["product_name"]
 
 # Create a dictionary to map the display name back to the Product ID
-product_map = dict(zip( filtered_df["product_display"],  filtered_sku_df["product_id"]))
+product_map = dict(zip( filtered_sku_df["product_display"],  filtered_sku_df["product_id"]))
 
 # Selectbox with formatted product ID and name
 selected_product_display = st.selectbox("Select Product", list(product_map.keys()))
