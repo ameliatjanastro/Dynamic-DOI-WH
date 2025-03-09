@@ -185,7 +185,7 @@ with st.expander("View Inbound Qty and OOS Graphs"):
     
 st.markdown("----")
 
-st.markdown("<h4 style='color: rgb(0, 0, 128);'>Deep Dive into RL Engine</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='color: rgb(128, 128, 128);'>Deep Dive into RL Engine</h4>", unsafe_allow_html=True)
 
 
 st.markdown("First we excluded some SKUs, Focus on SKUs with Landed DOI Increase/Decrease :):")
@@ -263,7 +263,7 @@ with col2:
 
 st.markdown("----")
 
-st.markdown("<h6 style='color: rgb(139, 69, 19);'>Landed DOI Comparison -  only for KOS</h6>", unsafe_allow_html=True)
+st.markdown("<h5 style='color: rgb(139, 69, 19);'>Landed DOI Comparison -  only for KOS</h6>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
@@ -348,7 +348,7 @@ st.dataframe(styled_df)
 # Product ID filter
 st.markdown("----")
 
-st.markddown("<h6 style='color: rgb(139, 69, 19);'>SKU Level Landed DOI & RL Qty</h6>", unsafe_allow_html=True)
+st.markdown("<h5 style='color: rgb(139, 69, 19);'>SKU Level Landed DOI & RL Qty</h5>", unsafe_allow_html=True)
 # Create a separate DataFrame for SKU Level View
 filtered_sku_df = analisa_df.copy()
 
