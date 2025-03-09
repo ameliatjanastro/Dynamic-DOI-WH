@@ -100,7 +100,7 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
 fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Projected"))
 
 fig_inb.update_layout(
-    width=700,  # Reduce width
+    width=600,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(font=dict(size=8))  # Make legend text smaller
@@ -114,7 +114,7 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
 fig_oos.for_each_trace(lambda t: t.update(name="% OOS Actual" if t.name == "% OOS Contribution" else "% OOS Projected"))
 
 fig_oos.update_layout(
-    width=700,  # Reduce width
+    width=500,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(font=dict(size=8))  # Make legend text smaller
