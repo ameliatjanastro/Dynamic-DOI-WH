@@ -114,6 +114,9 @@ grouped_df1.rename(columns={
     'Mode_Why_Increase_Decrease': 'Mode Reason'
 }, inplace=True)
 
+grouped_df1 = grouped_df1.sort_values(by='Count', ascending=False)
+
+
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
