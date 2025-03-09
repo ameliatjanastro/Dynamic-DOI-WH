@@ -105,66 +105,60 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
 st.markdown("----")
 
 # Selectbox for choosing which chart to display
-chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
-
-# Display the selected chart
-if chart_option == "Inbound Quantity Comparison":
-    st.plotly_chart(fig_inb)
-    # Sum RL and Inbound quantities
-    rl_actual = analisa_df['RL Qty Actual'].sum()
-    rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
-    inb_actual = inb_df['Actual'].sum()
-    inb_max_projected = inb_df['Max Projected'].sum()
+with st.expander("View Inbound Qty and OOS Graphs"):
     
-    # Create a DataFrame for stacked bars
-    conversion_data = pd.DataFrame({
-        'Category': ['Actual', 'Projected'],
-        'RL Qty': [rl_actual, rl_new],  # RL values (bottom of the stack)
-        'Inbound Qty': [inb_actual, inb_max_projected]  # Inbound values (stacked on top)
-    })
+    chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
     
-    # Melt DataFrame into long format for Plotly
-    conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
-    
-    # Define custom colors: lighter gray for RL, pastel green for Inbound
-    color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
-    
-    # Create a stacked bar chart using Plotly
-    fig = px.bar(
-        conversion_data,
-        x='Quantity',
-        y='Category',
-        color='Type',
-        orientation='h',
-        title="RL Qty vs Inbound Qty (Stacked Comparison)",
-        text='Quantity',
-        color_discrete_map=color_map
-    )
-    
-    # Ensure bars are stacked properly
-    fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
-    fig.update_layout(
-        xaxis_title="Total Quantity",
-        yaxis_title="",
-        showlegend=True,
-        barmode='relative',  # This ensures stacking instead of side-by-side bars
-        height=300,  # Reduce chart height
-        legend=dict(
-            font=dict(size=9),  # Reduce legend text size
-            title_font=dict(size=11),  # Reduce legend title size
-            yanchor="top", 
-            y=0.99, 
-            xanchor="right", 
-            x=0.99
+    # Display the selected chart
+    if chart_option == "Inbound Quantity Comparison":
+        st.plotly_chart(fig_inb)
+        # Sum RL and Inbound quantities
+        rl_actual = analisa_df['RL Qty Actual'].sum()
+        rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
+        inb_actual = inb_df['Actual'].sum()
+        inb_max_projected = inb_df['Max Projected'].sum()
+        
+        # Create a DataFrame for stacked bars
+        conversion_data = pd.DataFrame({
+            'Category': ['Actual', 'Projected'],
+            'RL Qty': [rl_actual, rl_new],  # RL values (bottom of the stack)
+            'Inbound Qty': [inb_actual, inb_max_projected]  # Inbound values (stacked on top)
+        })
+        
+        # Melt DataFrame into long format for Plotly
+        conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
+        
+        # Define custom colors: lighter gray for RL, pastel green for Inbound
+        color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
+        
+        # Create a stacked bar chart using Plotly
+        fig = px.bar(
+            conversion_data,
+            x='Quantity',
+            y='Category',
+            color='Type',
+            orientation='h',
+            title="RL Qty vs Inbound Qty (Stacked Comparison)",
+            text='Quantity',
+            color_discrete_map=color_map
         )
-    )
+        
+        # Ensure bars are stacked properly
+        fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
+        fig.update_layout(
+            xaxis_title="Total Quantity",
+            yaxis_title="",
+            showlegend=False,
+            barmode='relative',  # This ensures stacking instead of side-by-side bars
+            height=250  # Reduce chart height
+        )
+        
+        # Display in Streamlit
+        st.plotly_chart(fig, use_container_width=False)  # Reduce overall size
     
-    # Display in Streamlit
-    st.plotly_chart(fig, use_container_width=False)  # Reduce overall size
-
-
-else:
-    st.plotly_chart(fig_oos)
+    
+    else:
+        st.plotly_chart(fig_oos)
     
 st.markdown("----")
 
