@@ -258,6 +258,11 @@ with col2:
 
 # Apply category filtering (skip if "All" is selected)
 if selected_category != "All":
+    
+    filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
+    
+    # Exclude rows where l1_category_name contains "OFF"
+    filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
 
 filtered_df = filtered_df[(filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))]
@@ -267,10 +272,6 @@ filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
 # Apply DOI filtering (optional, ensures values are within reasonable range)
 filtered_df = filtered_df[(filtered_df['Landed DOI New Adjusted'] <= 100)]
 
-filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
-
-# Exclude rows where l1_category_name contains "OFF"
-filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
 
 
 # Calculate averages
