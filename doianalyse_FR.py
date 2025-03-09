@@ -69,7 +69,7 @@ merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True)
 merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
 col1, col2 = st.columns([1, 3])
 with col2:
-  st.data_editor(merged_df2, hide_index=True, use_container_width = True)
+  st.dataframe(merged_df2, hide_index=True, use_container_width = True)
 with col1:
     # Text area for notes
     st.markdown("""
@@ -163,7 +163,7 @@ st.markdown("----")
 st.subheader("Deep Dive into RL Engine")
 
 excluded_df = analisa_df[
-    analisa_df['Why Increase/Decrease?'].isin([
+    analisa_df['Verdict'].isin([
         'Excluded, out of scope since current doi > 100', 'Excluded, same order qty or gaorder','Landed DOI Sama'
     ])
 ][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
