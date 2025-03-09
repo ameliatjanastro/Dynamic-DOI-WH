@@ -150,7 +150,7 @@ col1, col2 = st.columns(2)
 
 # Multiselect filters
 with col1:
-    selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
+    selected_locations = st.selectbox("Select Location(s):", analisa_df['location_id'].unique())
 
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()
@@ -181,7 +181,7 @@ st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
 # Show SKUs where Landed DOI New is at least Landed DOI Old + 4
-sku_comparison_df = filtered_df[filtered_df['Landed DOI New'] >= (filtered_df['Landed DOI OLD'] + 4)][['sku_id', 'Landed DOI New', 'Landed DOI OLD']]
+sku_comparison_df = filtered_df[filtered_df['Landed DOI New'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_id', 'Landed DOI New', 'Landed DOI OLD']]
 
 st.write("### SKUs where Landed DOI New ≥ Landed DOI Old + 4")
 st.dataframe(sku_comparison_df)
