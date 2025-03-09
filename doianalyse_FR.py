@@ -32,7 +32,7 @@ st.markdown(
 
         /* EXCLUDE Plotly Charts from Font Size Reduction */
         .js-plotly-plot .plotly * {
-            font-size: 9px !important;  /* Ensures default or larger font */
+            font-size: 10px !important;  /* Ensures default or larger font */
         }
         
     </style>
@@ -100,9 +100,9 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
 fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Project"))
 
 fig_inb.update_layout(
-    width=800,  # Reduce width
+    width=700,  # Reduce width
     height=400,  # Reduce height
-    margin=dict(l=20, r=0, t=40, b=20),  # Adjust margins
+    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(
         font=dict(size=8)
     )  # Make legend text smaller
@@ -131,7 +131,7 @@ with st.expander("View Inbound Qty and OOS Graphs"):
     
     # Display the selected chart
     if chart_option == "Inbound Quantity Comparison":
-        st.plotly_chart(fig_inb,use_container_width=False)
+        st.plotly_chart(fig_inb)
         # Sum RL and Inbound quantities
         rl_actual = analisa_df['RL Qty Actual'].sum()
         rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
