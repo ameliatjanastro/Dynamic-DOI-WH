@@ -263,12 +263,20 @@ if selected_category != "All":
 filtered_df = filtered_df[(filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))& 
     (filtered_df['Why Increase/Decrease?'] != 'Jadi order karena min qty WH dan multiplier')]
 
+filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
+
+# Apply DOI filtering (optional, ensures values are within reasonable range)
+filtered_df = filtered_df[(filtered_df['Landed DOI New Adjusted'] <= 100)]
+
+# Calculate averages
+avg_landed_doi_new2 = filtered_df['Landed DOI New Adjusted'].mean()
+
 # Calculate averages
 avg_landed_doi_new = filtered_df['Landed DOI New'].mean()
 avg_landed_doi_old = filtered_df['Landed DOI OLD'].mean()
 
 # Display results with 2 decimal places
-st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
+st.write(f"**Average Landed DOI New:** {avg_landed_doi_new2:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
 # Show SKUs where Landed DOI New is at least Landed DOI Old + 4
