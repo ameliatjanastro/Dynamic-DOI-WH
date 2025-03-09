@@ -395,7 +395,7 @@ with col1:
     fig_doi.update_layout(
         width=270,  # Increase width
         height=400,  # Increase height
-        margin=dict(l=10, r=15, t=30, b=30),  # Adjust margins
+        margin=dict(l=10, r=25, t=30, b=30),  # Adjust margins
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
@@ -415,7 +415,7 @@ with col2:
     fig_rl.update_layout(
         width=270,  # Increase width
         height=400,  # Increase height
-        margin=dict(l=10, r=15, t=30, b=30),  # Adjust margins
+        margin=dict(l=10, r=25, t=30, b=30),  # Adjust margins
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
