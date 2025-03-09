@@ -310,11 +310,11 @@ st.write(f"**Average Landed DOI New:** {avg_landed_doi_new2:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
 # Find SKUs where Landed DOI New is at least Landed DOI Old + 4
-sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
+sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_id','product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
 # Convert Landed DOI New Adjusted to integer (round down)
 sku_comparison_df2['Landed DOI New Adjusted'] = np.floor(sku_comparison_df2['Landed DOI New Adjusted']).astype(int)
 # Sort by largest Landed DOI New Adjusted
-sku_comparison_df2 = sku_comparison_df2.sort_values(by='Landed DOI New Adjusted', ascending=False)
+sku_comparison_df2 = sku_comparison_df2.sort_values(by='product_id', ascending=False)
 # Count number of SKUs
 num_skus2 = len(sku_comparison_df2)
 
@@ -372,7 +372,7 @@ filtered_sku_df.loc[high_diff_mask2, 'Landed DOI New Adjusted'] *= 0.9  # Reduce
 
 
 
-
+filtered_sku_df['product_id'] = filtered_sku_df['product_id'].astype(int)
 filtered_sku_df["product_display"] =  filtered_sku_df["product_id"].astype(str) + " - " +  filtered_sku_df["product_name"]
 
 # Create a dictionary to map the display name back to the Product ID
