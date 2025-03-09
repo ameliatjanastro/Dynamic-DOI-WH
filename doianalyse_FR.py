@@ -179,10 +179,10 @@ with col1:
     st.dataframe(grouped_exclude, hide_index=True, use_container_width= True)
 with col2:
      # Text area for notes
-    notes = """
+    notes2 = """
     Focus on SKUs with Landed DOI Increase/Decrease :)
     """
-
+    st.markdown(notes2)
 filtered_df1 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
         'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
