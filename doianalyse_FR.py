@@ -57,7 +57,7 @@ analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound Date NEW']).
 
 # Adjust inbound dates to align with OOS dates (OOS dates = Inb dates +2)
 inb_df['OOS Date'] = inb_df['Date'] + pd.Timedelta(days=2)
-inb_df['OOS Date'] = inb_df['OOS Date'].dt.date  # Convert to date only (removes time)
+inb_df['OOS Date'] = pd.to_datetime(inb_df['OOS Date']).dt.date # Convert to date only (removes time)
 
 
 # Merge inbound data with total data on adjusted OOS dates
