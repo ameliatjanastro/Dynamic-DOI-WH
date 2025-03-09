@@ -108,7 +108,7 @@ fig_inb.update_layout(
         yanchor="bottom",  # Align to bottom of legend area
         y=1.1,  # Move legend above the chart
         xanchor="center",
-        x=0.5,
+        x=1,
         font=dict(size=8)
     )  # Make legend text smaller
 )
@@ -125,7 +125,7 @@ fig_oos.update_layout(
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(
-        orientation="h",  # Horizontal legend
+        orientation="v",  # Horizontal legend
         yanchor="bottom",  # Align to bottom of legend area
         y=1.1,  # Move legend above the chart
         xanchor="center",
