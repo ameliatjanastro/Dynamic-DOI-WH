@@ -77,7 +77,7 @@ with col1:
   - Accounts for OOS WH Fulfill x On Time.
   
   **Actual RL:** <span style='color: maroon; font-weight: 600; font-style: italic;'>974,365</span>  
-  **Projected RL:** <span style='color: green; font-weight: 600; font-style: italic;'>1,214,702</span>  
+  **Projected RL:** <span style='color: green; font-weight: 600; font-style: italic;'>1,214,641</span>  
   """, unsafe_allow_html=True)
 
 
@@ -167,6 +167,40 @@ chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Com
 # Display the selected chart
 if chart_option == "Inbound Quantity Comparison":
     st.plotly_chart(fig_inb)
+
+    # Sum RL quantities from analisa_df
+    rl_actual = analisa_df['RL Qty Actual'].sum()
+    rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
+    
+    # Sum Inbound quantities from Inb_df
+    inb_actual = Inb_df['Actual'].sum()
+    inb_max_projected = Inb_df['Max Projected'].sum()
+    
+    # Create a dataframe for visualization
+    conversion_data = pd.DataFrame({
+        'Category': ['RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Inbound Actual', 'Inbound Max Projected'],
+        'Quantity': [rl_actual, rl_new, inb_actual, inb_max_projected]
+    })
+    
+    # Create a horizontal bar chart using Plotly
+    fig = px.bar(
+        conversion_data,
+        x='Quantity',
+        y='Category',
+        orientation='h',
+        title="RL Qty vs Inbound Qty Conversion",
+        text='Quantity',
+        color='Category',
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    
+    fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
+    fig.update_layout(xaxis_title="Total Quantity", yaxis_title="Category", showlegend=False)
+    
+    # Display in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
+
+
 else:
     st.plotly_chart(fig_oos)
 st.markdown("----")
