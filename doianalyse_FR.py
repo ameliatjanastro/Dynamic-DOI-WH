@@ -393,10 +393,10 @@ with col1:
                      color_discrete_map={"Landed DOI New": "rgb(119, 221, 119)", "Landed DOI Old": "rgb(255, 153, 153)"})
     
     fig_doi.update_layout(
-    width=270,  # Reduce width
-    height=400,  # Reduce height
-    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
-    legend=dict(font=dict(size=8))  # Make legend text smaller
+        width=320,  # Increase width
+        height=450,  # Increase height
+        margin=dict(l=10, r=10, t=50, b=30),  # Adjust margins
+        legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
     st.plotly_chart(fig_doi, use_container_width=True)
@@ -412,13 +412,14 @@ with col2:
                     title="Comparison of RL Qty", color="Category",
                     color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty New": "rgb(119, 221, 119)"})
 
-    fig_rl.update_layout(
-    width=270,  # Reduce width
-    height=400,  # Reduce height
-    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
-    legend=dict(font=dict(size=8))  # Make legend text smaller
+    fig_RL.update_layout(
+        width=320,  # Increase width
+        height=450,  # Increase height
+        margin=dict(l=10, r=10, t=50, b=30),  # Adjust margins
+        legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
+    st.plotly_chart(fig_doi, use_container_width=True)
     st.plotly_chart(fig_rl, use_container_width=True)
 
 
