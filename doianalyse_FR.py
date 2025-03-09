@@ -96,6 +96,9 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
                  labels={'value': 'Inbound Quantity', 'variable': 'Type'},
                  title='Actual vs Projected Inbound Quantity',
                  barmode='group')
+
+fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Projected"))
+
 fig_inb.update_layout(
     width=700,  # Reduce width
     height=400,  # Reduce height
@@ -107,6 +110,9 @@ fig_inb.update_layout(
 fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
+
+fig_oos.for_each_trace(lambda t: t.update(name="% OOS Actual" if t.name == "% OOS Contribution" else "% OOS Projected"))
+
 fig_oos.update_layout(
     width=700,  # Reduce width
     height=400,  # Reduce height
