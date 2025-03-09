@@ -260,6 +260,8 @@ with col2:
 if selected_category != "All":
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
 
+filtered_df = filtered_df[filtered_df['landed_doi_old'] != 0]
+
 # Calculate averages
 avg_landed_doi_new = filtered_df['Landed DOI New'].mean()
 avg_landed_doi_old = filtered_df['Landed DOI OLD'].mean()
