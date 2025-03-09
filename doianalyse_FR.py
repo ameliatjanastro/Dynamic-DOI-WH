@@ -89,7 +89,7 @@ analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY
 
 filtered_df1 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
-        'Harus order', 'OOS WH', 'Jadi order karena min qty WH dan multiplier'
+        'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
     ])
 ][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
 
