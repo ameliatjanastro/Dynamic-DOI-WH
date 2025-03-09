@@ -168,7 +168,7 @@ excluded_df = analisa_df[
     ])
 ][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
 
-grouped_exclude = excluded_df.groupby('Why Increase/Decrease?', as_index=False).agg(
+grouped_exclude = excluded_df.groupby('Verdict', as_index=False).agg(
     Product_Count=('product_id', 'nunique')
 )
 
