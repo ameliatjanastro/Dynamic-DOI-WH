@@ -99,9 +99,17 @@ filtered_df2 = analisa_df[
     ])
 ][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
 
-grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False)[
-    ['product_id']
-].nunique()
+grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False).agg(
+    Product_Count=('product_id', 'nunique'),
+    Mode_Why_Increase_Decrease=('Why Increase/Decrease?', lambda x: x.mode()[0] if not x.mode().empty else None)
+)
+
+# Rename columns for display
+grouped_df1.rename(columns={
+    'l1_category_name': 'Category Name',
+    'Product_Count': 'Unique Products',
+    'Mode_Why_Increase_Decrease': 'Most Common Reason'
+}, inplace=True)
 
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
