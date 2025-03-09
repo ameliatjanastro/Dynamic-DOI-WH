@@ -313,6 +313,10 @@ sku_comparison_df2 = sku_comparison_df2.rename(columns={
     'Landed DOI OLD': 'Landed DOI Old'
 })
 
+sku_comparison_df2['Landed DOI Old'] = sku_comparison_df2['Landed DOI Old'].astype(int)
+sku_comparison_df2['Landed DOI New'] = sku_comparison_df2['Landed DOI New'].astype(int)
+
+
 # Function to apply conditional styling
 def highlight_large_doi_diff(row):
     """Highlight rows in pastel yellow if Landed DOI New - Landed DOI Old > 15."""
