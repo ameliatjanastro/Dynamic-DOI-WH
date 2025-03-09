@@ -97,7 +97,7 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
                  title='Actual vs Projected Inbound Quantity',
                  barmode='group')
 
-fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Projected"))
+fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Project"))
 
 fig_inb.update_layout(
     width=700,  # Reduce width
@@ -113,7 +113,7 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 
-fig_oos.for_each_trace(lambda t: t.update(name="% Actual" if t.name == "% OOS Contribution" else "% Projected"))
+fig_oos.for_each_trace(lambda t: t.update(name="% Actual" if t.name == "% OOS Contribution" else "% Project"))
 
 fig_oos.update_layout(
     width=700,  # Reduce width
@@ -400,7 +400,7 @@ with col1:
 
     fig_doi = px.bar(landed_doi_data, y="Value", x="Category", orientation='v',
                      title="Comparison of Landed DOI New vs Old", color="Category",
-                     color_discrete_map={"Landed DOI New": "rgb(119, 221, 119)", "Landed DOI Old": "rgb(255, 153, 153)"})
+                     color_discrete_map={"New": "rgb(119, 221, 119)", "Old": "rgb(255, 153, 153)"})
     
     fig_doi.update_layout(
         width=270,  # Increase width
@@ -414,13 +414,13 @@ with col1:
 # RL Quantity Comparison
 with col2:
     rl_qty_data = pd.DataFrame({
-        "Category": ["Actual", "Projected"],
+        "Category": ["Actual", "Project"],
         "Value": [filtered_df2['RL Qty Actual'].mean(), filtered_df2['RL Qty NEW after MIN QTY WH'].mean()]
     })
 
     fig_rl = px.bar(rl_qty_data, y="Value", x="Category", orientation='v',
                     title="Comparison of RL Qty", color="Category",
-                    color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty New": "rgb(119, 221, 119)"})
+                    color_discrete_map={"Actual": "rgb(255, 153, 153)", "Project": "rgb(119, 221, 119)"})
 
     fig_rl.update_layout(
         width=270,  # Increase width
