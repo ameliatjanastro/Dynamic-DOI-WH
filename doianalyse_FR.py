@@ -2,11 +2,8 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 import plotly.express as px
-import plotly.graph_objects as go
-
 
 st.set_page_config(layout="wide")
-
 
 st.markdown(
     """
@@ -59,7 +56,6 @@ analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound Date NEW']).
 inb_df['OOS Date'] = inb_df['Date'] + pd.Timedelta(days=2)
 inb_df['OOS Date'] = pd.to_datetime(inb_df['OOS Date']).dt.date # Convert to date only (removes time)
 
-
 # Merge inbound data with total data on adjusted OOS dates
 merged_df = pd.merge(total_df, inb_df[['Date', 'OOS Date', 'Actual', 'Max Projected']],
                      left_on='Date', right_on='OOS Date', how='left')
@@ -93,7 +89,6 @@ analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
 # Plot actual vs projected inbound quantity
-
 fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
                  labels={'value': 'Inbound Quantity', 'variable': 'Type'},
                  title='Actual vs Projected Inbound Quantity',
@@ -179,7 +174,6 @@ with st.expander("View Inbound Qty and OOS Graphs"):
         # Display in Streamlit
         st.plotly_chart(fig, use_container_width=False)  # Reduce overall size
     
-    
     else:
         st.plotly_chart(fig_oos)
     
@@ -187,8 +181,7 @@ st.markdown("----")
 
 st.markdown("<h4 style='color: rgb(128, 128, 128);'>Deep Dive into RL Engine</h4>", unsafe_allow_html=True)
 
-
-st.markdown("First we excluded some SKUs, Focus on SKUs with Landed DOI Increase/Decrease :):")
+st.markdown("First we excluded some SKUs, Focus on SKUs with Landed DOI Increase/Decrease :)")
 excluded_df = analisa_df[
     analisa_df['Verdict'].isin([
         'Excluded, out of scope since current doi > 100', 'Excluded, same order qty or gaorder','Landed DOI Sama'
@@ -219,7 +212,6 @@ filtered_df2 = analisa_df[
     ])
 ][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
 
-
 grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False).agg(
     Product_Count=('product_id', 'nunique'),
     Mode_Why_Increase_Decrease=('Why Increase/Decrease?', lambda x: x.mode()[0] if not x.mode().empty else None)
@@ -233,7 +225,6 @@ grouped_df1.rename(columns={
 }, inplace=True)
 
 grouped_df1 = grouped_df1.sort_values(by='Count SKU', ascending=False)
-
 
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
@@ -316,6 +307,7 @@ sku_comparison_df2['Landed DOI New Adjusted'] = np.floor(sku_comparison_df2['Lan
 # Sort by largest Landed DOI New Adjusted
 sku_comparison_df2['product_id'] = sku_comparison_df2['product_id'].astype(int)
 sku_comparison_df2 = sku_comparison_df2.sort_values(by='product_id', ascending=True)
+
 # Count number of SKUs
 num_skus2 = len(sku_comparison_df2)
 
@@ -331,7 +323,6 @@ sku_comparison_df2 = sku_comparison_df2.rename(columns={
 
 sku_comparison_df2['Landed DOI Old'] = sku_comparison_df2['Landed DOI Old'].astype(int)
 sku_comparison_df2['Landed DOI New'] = sku_comparison_df2['Landed DOI New'].astype(int)
-
 
 # Function to apply conditional styling
 def highlight_large_doi_diff(row):
@@ -367,11 +358,6 @@ filtered_sku_df['Landed DOI New Adjusted'] = filtered_sku_df['Landed DOI New'] *
 # Apply additional 10% reduction if Landed DOI New - Landed DOI OLD > 6
 high_diff_mask2 = (filtered_sku_df['Landed DOI New'] - filtered_sku_df['Landed DOI OLD']) > 6
 filtered_sku_df.loc[high_diff_mask2, 'Landed DOI New Adjusted'] *= 0.9  # Reduce by 10%
-
-
-
-
-
 
 filtered_sku_df['product_id'] = filtered_sku_df['product_id'].astype(int)
 filtered_sku_df["product_display"] =  filtered_sku_df["product_id"].astype(str) + " - " +  filtered_sku_df["product_name"]
@@ -434,5 +420,3 @@ with col2:
     )
 
     st.plotly_chart(fig_rl, use_container_width=False)
-
-
