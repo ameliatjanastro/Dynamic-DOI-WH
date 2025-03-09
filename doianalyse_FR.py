@@ -260,7 +260,7 @@ with col2:
 if selected_category != "All":
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
 
-filtered_df = filtered_df[filtered_df['Landed DOI OLD'] != 0]
+filtered_df = filtered_df[filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))]
 
 # Calculate averages
 avg_landed_doi_new = filtered_df['Landed DOI New'].mean()
