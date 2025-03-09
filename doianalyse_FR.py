@@ -195,13 +195,13 @@ col1, col2 = st.columns(2)
 
 # Multiselect filters
 with col1:
-    selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
+    selected_locations = st.selectbox("Select Location(s):", analisa_df['location_id'].unique())
 
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()
 
 if selected_locations:
-    filtered_df = filtered_df[filtered_df['location_id'].isin(selected_locations)]
+    filtered_df = filtered_df[filtered_df['location_id'] == selected_locations]
 
 # Get unique categories and add "All" option
 available_categories = ["All"] + list(filtered_df['l1_category_name'].unique())
