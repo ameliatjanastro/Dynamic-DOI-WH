@@ -104,12 +104,7 @@ fig_inb.update_layout(
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(
-        orientation="h",  # Horizontal legend
-        yanchor="bottom",  # Align to bottom of legend area
-        y=1.1,  # Move legend above the chart
-        xanchor="center",
-        x=1,
-        font=dict(size=8)
+        font=dict(size=6)
     )  # Make legend text smaller
 )
 
@@ -118,18 +113,13 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 
-fig_oos.for_each_trace(lambda t: t.update(name="% OOS Actual" if t.name == "% OOS Contribution" else "% OOS Projected"))
+fig_oos.for_each_trace(lambda t: t.update(name="% Actual" if t.name == "% OOS Contribution" else "% Projected"))
 
 fig_oos.update_layout(
-    width=500,  # Reduce width
-    height=450,  # Reduce height
+    width=700,  # Reduce width
+    height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(
-        orientation="v",  # Horizontal legend
-        yanchor="bottom",  # Align to bottom of legend area
-        y=1.1,  # Move legend above the chart
-        xanchor="center",
-        x=0.5,
         font=dict(size=8)
     )  # Make legend text smaller
 )
