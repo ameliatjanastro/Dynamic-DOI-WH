@@ -100,18 +100,18 @@ fig_inb.update_layout(
     width=800,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
-    legend=dict(font=dict(size=10))  # Make legend text smaller
+    legend=dict(font=dict(size=8))  # Make legend text smaller
 )
 
 # Create the OOS percentage line chart
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contr.', 'Projected % OOS Contr.'],
+fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 fig_oos.update_layout(
     width=800,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
-    legend=dict(font=dict(size=10))  # Make legend text smaller
+    legend=dict(font=dict(size=8))  # Make legend text smaller
 )
 
 # Selectbox for choosing which chart to display
