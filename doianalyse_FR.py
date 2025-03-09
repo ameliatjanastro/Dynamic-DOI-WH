@@ -100,10 +100,17 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
 fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Projected"))
 
 fig_inb.update_layout(
-    width=600,  # Reduce width
+    width=700,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
-    legend=dict(font=dict(size=8))  # Make legend text smaller
+    legend=dict(
+        orientation="h",  # Horizontal legend
+        yanchor="bottom",  # Align to bottom of legend area
+        y=1.1,  # Move legend above the chart
+        xanchor="center",
+        x=0.5,
+        font=dict(size=8)
+    )  # Make legend text smaller
 )
 
 # Create the OOS percentage line chart
@@ -117,7 +124,14 @@ fig_oos.update_layout(
     width=500,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
-    legend=dict(font=dict(size=8))  # Make legend text smaller
+    legend=dict(
+        orientation="h",  # Horizontal legend
+        yanchor="bottom",  # Align to bottom of legend area
+        y=1.1,  # Move legend above the chart
+        xanchor="center",
+        x=0.5,
+        font=dict(size=8)
+    )  # Make legend text smaller
 )
 
 # Selectbox for choosing which chart to display
