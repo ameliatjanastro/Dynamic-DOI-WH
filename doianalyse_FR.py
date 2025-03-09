@@ -107,6 +107,7 @@ grouped_df1 = filtered_df1.groupby('Why Increase/Decrease?', as_index=False)[
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
 total_rl_qty_new = filtered_df1['RL Qty NEW after MIN QTY WH'].sum().astype(int)  # Sum of RL Qty NEW
 total_rl_qty_old = filtered_df2['RL Qty Actual'].sum().astype(int)
+total_productsold = filtered_df2['product_id'].nunique()
 landed_doi_yg_gaorder = filtered_df2['Landed DOI New'].mean().astype(float)
 
 # Display the table without an index
@@ -122,8 +123,9 @@ with col2:
     - Proposed Logic: DOI Policy L2PO, With Min SS WH, Cov Next Next Inb
     """
     st.markdown(notes)
-    st.write(f"**Count SKUs with potential in preventing OOS occurences:** {total_products}")
+    st.write(f"**Count SKUs yg jadi order to prevent OOS occurences:** {total_products}")
     st.write(f"**Sum of Add. RL Qty with New DOI Policy:** <span style='color: green;'>{total_rl_qty_new}</span>", unsafe_allow_html=True)
+    st.write(f"**Count SKUs yg jadi gaorder:** {total_productsold}")
     st.write(f"**Sum of RL Qty yang jadi gaorder:** {total_rl_qty_old}")
     st.write(f"**Blended DOI yg gaorder:** {landed_doi_yg_gaorder}")
     
