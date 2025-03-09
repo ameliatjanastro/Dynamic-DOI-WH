@@ -3,6 +3,9 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 
+st.set_page_config(layout="wide")
+
+
 st.markdown(
     """
     <style>
@@ -106,9 +109,9 @@ grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False).agg(
 
 # Rename columns for display
 grouped_df1.rename(columns={
-    'l1_category_name': 'Category Name',
-    'Product_Count': 'Unique Products',
-    'Mode_Why_Increase_Decrease': 'Most Common Reason'
+    'l1_category_name': 'L1 Category',
+    'Product_Count': 'Count',
+    'Mode_Why_Increase_Decrease': 'Mode Reason'
 }, inplace=True)
 
 # Calculate summary statistics
