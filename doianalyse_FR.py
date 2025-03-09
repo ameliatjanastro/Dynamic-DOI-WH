@@ -123,8 +123,8 @@ if chart_option == "Inbound Quantity Comparison":
     # Sum RL and Inbound quantities
     rl_actual = analisa_df['RL Qty Actual'].sum()
     rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
-    inb_actual = Inb_df['Actual'].sum()
-    inb_max_projected = Inb_df['Max Projected'].sum()
+    inb_actual = inb_df['Actual'].sum()
+    inb_max_projected = inb_df['Max Projected'].sum()
     
     # Categories and values for stacking
     categories = ['Actual', 'Projected']
