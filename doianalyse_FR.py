@@ -126,7 +126,7 @@ st.markdown("----")
 st.markdown("Below are the total no. of SKUs that we **did not** order but **would order** with new doi policy:")
 col1, col2 = st.columns([3, 2])
 with col1:
-  st.data_editor(grouped_df1, hide_index=True, use_container_width= False)
+  st.data_editor(grouped_df1, hide_index=True, use_container_width= True)
 with col2:
      # Text area for notes
     notes = """
