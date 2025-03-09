@@ -99,7 +99,9 @@ filtered_df2 = analisa_df[
     ])
 ][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
 
-
+grouped_df1 = filtered_df1.groupby('Why Increase/Decrease?', as_index=False)[
+    ['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']
+].sum()
 
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
@@ -112,7 +114,7 @@ st.markdown("----")
 st.markdown("Below are the list of SKUs that we **did not** order but **would order** with new doi policy:")
 col1, col2 = st.columns([2, 2])
 with col1:
-  st.data_editor(filtered_df1, hide_index=True, use_container_width= False)
+  st.data_editor(grouped_df1, hide_index=True, use_container_width= False)
 with col2:
      # Text area for notes
     notes = """
