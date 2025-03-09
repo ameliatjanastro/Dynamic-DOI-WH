@@ -161,7 +161,7 @@ if chart_option == "Inbound Quantity Comparison":
         xaxis_title="Total Quantity",
         yaxis_title="",
         showlegend=True,
-        barmode='stack',
+        barmode='relative',
         height=300,
         legend=dict(
         font=dict(size=10),  # Reduce legend text size
