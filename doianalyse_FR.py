@@ -48,7 +48,7 @@ analisa_df = pd.read_csv("analisa_updated.csv")
 # Ensure date columns are in datetime format
 inb_df['Date'] = pd.to_datetime(inb_df['Date']).dt.date
 total_df['Date'] = pd.to_datetime(total_df['Date']).dt.date
-analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound_Date NEW']).dt.date
+analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound Date NEW']).dt.date
 
 # Adjust inbound dates to align with OOS dates (OOS dates = Inb dates +2)
 inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
