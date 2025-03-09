@@ -266,7 +266,7 @@ if selected_category != "All":
 filtered_df = filtered_df[(filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))]
 
 filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
-high_diff_mask = (filtered_df['Landed DOI New'] - filtered_df['Landed DOI OLD']) > 6
+high_diff_mask = (filtered_df['Landed DOI New'] - filtered_df['Landed DOI OLD']) > 4
 
 # Apply an additional 25% reduction for those rows
 filtered_df.loc[high_diff_mask, 'Landed DOI New Adjusted'] *= 0.75  # Reduce by 25%
@@ -285,30 +285,12 @@ avg_landed_doi_old = filtered_df['Landed DOI OLD'].mean()
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new2:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Show SKUs where Landed DOI New is at least Landed DOI Old + 4
-sku_comparison_df = filtered_df[filtered_df['Landed DOI New'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New', 'Landed DOI OLD']]
-
-# Count number of SKUs
-num_skus = len(sku_comparison_df)
-
 # Find SKUs where Adjusted Landed DOI New is at least Landed DOI Old + 4
 sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
-
+# Convert Landed DOI New Adjusted to integer (round down)
+sku_comparison_df2['Landed DOI New Adjusted'] = np.floor(sku_comparison_df2['Landed DOI New Adjusted']).astype(int)
+# Sort by largest Landed DOI New Adjusted
+sku_comparison_df2 = sku_comparison_df2.sort_values(by='Landed DOI New Adjusted', ascending=False)
 # Count number of SKUs
 num_skus2 = len(sku_comparison_df2)
 
