@@ -263,7 +263,7 @@ with col2:
 
 st.markdown("----")
 
-st.subheader("<h6>Landed DOI Comparison -  only for KOS</h6>", unsafe_allow_html=True)
+st.markdown("<h6 style='color: rgb(176, 226, 255);'>Landed DOI Comparison -  only for KOS</h6>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
@@ -348,7 +348,7 @@ st.dataframe(styled_df)
 # Product ID filter
 st.markdown("----")
 
-st.markddown("<h4 style='color: rgb(128, 128, 128);'>SKU Level View</h4>", unsafe_allow_html=True)
+st.markddown("<h6 style='color: rgb(176, 226, 255);'>SKU Level Landed DOI & RL Qty</h6>", unsafe_allow_html=True)
 # Create a separate DataFrame for SKU Level View
 filtered_sku_df = analisa_df.copy()
 
