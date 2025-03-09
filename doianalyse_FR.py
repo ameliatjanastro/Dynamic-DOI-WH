@@ -171,7 +171,8 @@ with st.expander("View Inbound Qty and OOS Graphs"):
             xaxis_title="Total Quantity",
             yaxis_title="",
             showlegend=False,
-            barmode='relative',  # This ensures stacking instead of side-by-side bars
+            barmode='relative',
+            margin=dict(l=20, r=20, t=10, b=20), # This ensures stacking instead of side-by-side bars
             height=250  # Reduce chart height
         )
         
