@@ -275,7 +275,7 @@ if selected_category != "All":
 filtered_df = filtered_df[(filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))]
 
 filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
-high_diff_mask = (filtered_df['Landed DOI New'] - filtered_df['Landed DOI OLD']) > 4
+high_diff_mask = (filtered_df['Landed DOI New'] - filtered_df['Landed DOI OLD']) > 6
 
 # Apply an additional 25% reduction for those rows
 filtered_df.loc[high_diff_mask, 'Landed DOI New Adjusted'] *= 0.75  # Reduce by 25%
