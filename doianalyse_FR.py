@@ -183,13 +183,16 @@ excluded_df = analisa_df[
 ][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
 
 grouped_exclude = excluded_df.groupby('Verdict', as_index=False).agg(
-    Count SKU=('product_id', 'nunique')
+    Product_Count=('product_id', 'nunique')
 )
+
+grouped_exclude.rename(columns={
+    'Product_Count': 'Count SKU'
+}, inplace=True)
 
 col1, col2 = st.columns([2.5, 2])
 with col1:
     st.dataframe(grouped_exclude, hide_index=True, use_container_width= True)
-
 
 filtered_df1 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
