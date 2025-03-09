@@ -419,7 +419,6 @@ with col2:
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
-    st.plotly_chart(fig_doi, use_container_width=True)
     st.plotly_chart(fig_rl, use_container_width=True)
 
 
