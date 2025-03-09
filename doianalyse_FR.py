@@ -43,7 +43,7 @@ st.markdown(" ")
 # Load CSV files
 inb_df = pd.read_csv("inb.csv")
 total_df = pd.read_csv("total.csv")
-analisa_df = pd.read_csv("analisa.csv")
+analisa_df = pd.read_csv("analisa_updated.csv")
 
 # Ensure date columns are in datetime format
 inb_df['Date'] = pd.to_datetime(inb_df['Date']).dt.date
@@ -87,8 +87,18 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
-filtered_df1 = analisa_df[(analisa_df['RL Qty Actual'] == 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] != 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH']]
-filtered_df2 = analisa_df[(analisa_df['RL Qty Actual'] != 0) & (analisa_df['RL Qty NEW after MIN QTY WH'] == 0)][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Landed DOI New']]
+filtered_df1 = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Harus order', 'OOS WH', 'Jadi order karena min qty WH dan multiplier'
+    ])
+][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
+
+filtered_df2 = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Landed DOI aman tanpa order', 'OOS WH but galaku, consider derange'
+    ])
+][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
+
 
 
 # Calculate summary statistics
