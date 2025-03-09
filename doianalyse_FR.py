@@ -90,19 +90,6 @@ analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New',
 analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
 analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 
-filtered_df1 = analisa_df[
-    analisa_df['Why Increase/Decrease?'].isin([
-        'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
-    ])
-][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
-
-filtered_df2 = analisa_df[
-    analisa_df['Why Increase/Decrease?'].isin([
-        'Landed DOI aman tanpa order', 'OOS WH but galaku, consider derange'
-    ])
-][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
-
-
 # Plot actual vs projected inbound quantity
 
 fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
@@ -122,56 +109,52 @@ chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Com
 
 # Display the selected chart
 if chart_option == "Inbound Quantity Comparison":
+    st.plotly_chart(fig_inb)
     # Sum RL and Inbound quantities
     rl_actual = analisa_df['RL Qty Actual'].sum()
     rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
     inb_actual = inb_df['Actual'].sum()
     inb_max_projected = inb_df['Max Projected'].sum()
     
-    # Categories and values for stacking
-    categories = ['Actual', 'Projected']
-    rl_values = [rl_actual, rl_new]  # RL Qty (bottom)
-    inb_values = [inb_actual, inb_max_projected]  # Inbound Qty (top)
+    # Create a DataFrame for stacked bars
+    conversion_data = pd.DataFrame({
+        'Category': ['Actual', 'Projected'],
+        'RL Qty': [rl_actual, rl_new],  # RL values (bottom of the stack)
+        'Inbound Qty': [inb_actual, inb_max_projected]  # Inbound values (stacked on top)
+    })
     
-    # Create the stacked bar chart using Plotly Graph Objects
-    fig = go.Figure()
+    # Melt DataFrame into long format for Plotly
+    conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
     
-    # Add RL Qty (gray, at the bottom)
-    fig.add_trace(go.Bar(
-        y=categories,
-        x=rl_values,
-        name="RL Qty",
+    # Define custom colors: lighter gray for RL, pastel green for Inbound
+    color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
+    
+    # Create a stacked bar chart using Plotly
+    fig = px.bar(
+        conversion_data,
+        x='Quantity',
+        y='Category',
+        color='Type',
         orientation='h',
-        marker=dict(color='#d3d3d3'),
-        text=rl_values,
-        textposition='inside'
-    ))
-    
-    # Add Inbound Qty (green, stacked on top)
-    fig.add_trace(go.Bar(
-        y=categories,
-        x=inb_values,
-        name="Inbound Qty",
-        orientation='h',
-        marker=dict(color='#77dd77'),
-        text=inb_values,
-        textposition='inside'
-    ))
-    
-    # Update layout to ensure stacking
-    fig.update_layout(
         title="RL Qty vs Inbound Qty (Stacked Comparison)",
+        text='Quantity',
+        color_discrete_map=color_map
+    )
+    
+    # Ensure bars are stacked properly
+    fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
+    fig.update_layout(
         xaxis_title="Total Quantity",
         yaxis_title="",
-        barmode='stack',  # Forces stacking instead of side-by-side bars
-        height=350,  # Reduce chart height
         showlegend=True,
+        barmode='relative',  # This ensures stacking instead of side-by-side bars
+        height=300,  # Reduce chart height
         legend=dict(
-            font=dict(size=10),
-            title_font=dict(size=11),
-            yanchor="top",
-            y=0.99,
-            xanchor="right",
+            font=dict(size=9),  # Reduce legend text size
+            title_font=dict(size=11),  # Reduce legend title size
+            yanchor="top", 
+            y=0.99, 
+            xanchor="right", 
             x=0.99
         )
     )
@@ -186,6 +169,21 @@ else:
 st.markdown("----")
 
 st.subheader("Deep Dive into RL Engine")
+
+
+
+filtered_df1 = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
+    ])
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
+
+filtered_df2 = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Landed DOI aman tanpa order', 'OOS WH but galaku, consider derange'
+    ])
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
+
 
 grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False).agg(
     Product_Count=('product_id', 'nunique'),
