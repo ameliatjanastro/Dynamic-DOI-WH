@@ -172,8 +172,8 @@ with st.expander("View Inbound Qty and OOS Graphs"):
             yaxis_title="",
             showlegend=False,
             barmode='relative',
-            margin=dict(l=20, r=20, t=10, b=20), # This ensures stacking instead of side-by-side bars
-            height=250  # Reduce chart height
+            margin=dict(l=20, r=20, t=20, b=20), # This ensures stacking instead of side-by-side bars
+            height=150  # Reduce chart height
         )
         
         # Display in Streamlit
