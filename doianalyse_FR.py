@@ -91,17 +91,17 @@ filtered_df1 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
         'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
     ])
-][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
 
 filtered_df2 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
         'Landed DOI aman tanpa order', 'OOS WH but galaku, consider derange'
     ])
-][['product_id', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
 
-grouped_df1 = filtered_df1.groupby('Why Increase/Decrease?', as_index=False)[
-    ['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']
-].sum()
+grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False)[
+    ['product_id']
+].nunique()
 
 # Calculate summary statistics
 total_products = filtered_df1['product_id'].nunique()  # Count unique products
@@ -112,7 +112,7 @@ landed_doi_yg_gaorder = filtered_df2['Landed DOI New'].mean().astype(float)
 
 # Display the table without an index
 st.markdown("----")
-st.markdown("Below are the list of SKUs that we **did not** order but **would order** with new doi policy:")
+st.markdown("Below are the total no. of SKUs that we **did not** order but **would order** with new doi policy:")
 col1, col2 = st.columns([2, 2])
 with col1:
   st.data_editor(grouped_df1, hide_index=True, use_container_width= False)
