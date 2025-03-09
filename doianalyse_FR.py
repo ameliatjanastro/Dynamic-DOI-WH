@@ -314,7 +314,8 @@ sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filt
 # Convert Landed DOI New Adjusted to integer (round down)
 sku_comparison_df2['Landed DOI New Adjusted'] = np.floor(sku_comparison_df2['Landed DOI New Adjusted']).astype(int)
 # Sort by largest Landed DOI New Adjusted
-sku_comparison_df2 = sku_comparison_df2.sort_values(by='product_id', ascending=False)
+sku_comparison_df2['product_id'] = sku_comparison_df2['product_id'].astype(int)
+sku_comparison_df2 = sku_comparison_df2.sort_values(by='product_id', ascending=True)
 # Count number of SKUs
 num_skus2 = len(sku_comparison_df2)
 
