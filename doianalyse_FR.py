@@ -112,7 +112,7 @@ else:
 st.markdown("----")
 
 st.subheader("Landed DOI Comparison")
-st.markdown("*exc. current doi wh + ospo > 100*")
+#st.markdown("*exc. current doi wh + ospo > 100*")
 # Exclude Landed DOI values greater than 21 before calculating the average
 col1, col2 = st.columns(2)
 
@@ -126,25 +126,29 @@ filtered_df = analisa_df.copy()  # Start with full DataFrame
 if selected_locations:
     filtered_df = filtered_df[filtered_df['location_id'].isin(selected_locations)]
 
-available_categories = filtered_df['l1_category_name'].unique()
+# Get unique categories and add "All" option
+available_categories = list(filtered_df['l1_category_name'].unique())
+available_categories.insert(0, "All")
 
 with col2:
-    selected_categories = st.selectbox("Select L1 Category(s):", available_categories)
+    selected_categories = st.multiselect("Select L1 Category(s):", available_categories, default="All")
 
-if selected_categories:
-    filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_categories]
+# Apply category filtering
+if "All" not in selected_categories:
+    filtered_df = filtered_df[filtered_df['l1_category_name'].isin(selected_categories)]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 100]
 filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 100]
 
 # Calculate averages
-avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean()*0.8
+avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean() * 0.8
 avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 
 # Display results with 2 decimal places
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
-st.write(f"**Average Landed DOI Oid:** {avg_landed_doi_old:.2f}")
+st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
+
 
 # Product ID filter
 st.markdown("----")
