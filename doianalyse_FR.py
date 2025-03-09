@@ -96,11 +96,23 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
                  labels={'value': 'Inbound Quantity', 'variable': 'Type'},
                  title='Actual vs Projected Inbound Quantity',
                  barmode='group')
+fig_inb.update_layout(
+    width=800,  # Reduce width
+    height=400,  # Reduce height
+    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
+    legend=dict(font=dict(size=10))  # Make legend text smaller
+)
 
 # Create the OOS percentage line chart
 fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
+fig_oos.update_layout(
+    width=800,  # Reduce width
+    height=400,  # Reduce height
+    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
+    legend=dict(font=dict(size=10))  # Make legend text smaller
+)
 
 # Selectbox for choosing which chart to display
 with st.expander("View Inbound Qty and OOS Graphs"):
@@ -136,7 +148,7 @@ with st.expander("View Inbound Qty and OOS Graphs"):
             y='Category',
             color='Type',
             orientation='h',
-            title="RL Qty vs Inbound Qty (Stacked Comparison)",
+            title="RL to Inbound Qty Conversion",
             text='Quantity',
             color_discrete_map=color_map
         )
@@ -163,7 +175,7 @@ st.markdown("----")
 st.subheader("Deep Dive into RL Engine")
 
 
-st.markdown("First we excluded some SKUs:")
+st.markdown("First we excluded some SKUs, Focus on SKUs with Landed DOI Increase/Decrease :):")
 excluded_df = analisa_df[
     analisa_df['Verdict'].isin([
         'Excluded, out of scope since current doi > 100', 'Excluded, same order qty or gaorder','Landed DOI Sama'
@@ -177,12 +189,8 @@ grouped_exclude = excluded_df.groupby('Verdict', as_index=False).agg(
 col1, col2 = st.columns([2.5, 2])
 with col1:
     st.dataframe(grouped_exclude, hide_index=True, use_container_width= True)
-with col2:
-     # Text area for notes
-    notes2 = """
-    Focus on SKUs with Landed DOI Increase/Decrease :)
-    """
-    st.markdown(notes2)
+
+
 filtered_df1 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
         'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
@@ -254,6 +262,7 @@ with col1:
 filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
 # Exclude rows where l1_category_name contains "OFF"
 filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
+filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("Olahraga", na=False, case=False)]
 available_categories = ["All"] + list (filtered_df[(filtered_df['location_id'] == 40)]['l1_category_name'].unique())
 
 with col2:
@@ -285,7 +294,7 @@ avg_landed_doi_old = filtered_df['Landed DOI OLD'].mean()
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new2:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
-# Find SKUs where Adjusted Landed DOI New is at least Landed DOI Old + 4
+# Find SKUs where Landed DOI New is at least Landed DOI Old + 4
 sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
 # Convert Landed DOI New Adjusted to integer (round down)
 sku_comparison_df2['Landed DOI New Adjusted'] = np.floor(sku_comparison_df2['Landed DOI New Adjusted']).astype(int)
@@ -295,11 +304,27 @@ sku_comparison_df2 = sku_comparison_df2.sort_values(by='Landed DOI New Adjusted'
 num_skus2 = len(sku_comparison_df2)
 
 # Display count
-st.write(f"**Total Number of SKUs where Adjusted Landed DOI New ≥ Landed DOI Old + 4:** {num_skus2}")
+st.write(f"**Total Number of SKUs where Landed DOI New ≥ Landed DOI Old + 4:** {num_skus2}")
 
 # Display DataFrame
-st.write("### SKUs where Adjusted Landed DOI New ≥ Landed DOI Old + 4")
-st.dataframe(sku_comparison_df2)
+st.write("### SKUs where Landed DOI New ≥ Landed DOI Old + 4")
+sku_comparison_df2 = sku_comparison_df2.rename(columns={
+    'product_name': 'Product Name',
+    'Landed DOI New Adjusted': 'Landed DOI New',
+    'Landed DOI OLD': 'Landed DOI Old'
+})
+
+# Function to apply conditional styling
+def highlight_large_doi_diff(row):
+    """Highlight rows in pastel yellow if Landed DOI New - Landed DOI Old > 15."""
+    color = 'background-color: #FFF9C4' if (row['Landed DOI New'] - row['Landed DOI Old']) > 15 else ''
+    return [color] * len(row)
+
+# Apply styling
+styled_df = sku_comparison_df2.style.apply(highlight_large_doi_diff, axis=1)
+
+# Display in Streamlit
+st.dataframe(styled_df)
 
 
 
@@ -313,23 +338,22 @@ st.dataframe(sku_comparison_df2)
 st.markdown("----")
 
 st.subheader("SKU Level View")
-analisa_df["product_display"] = analisa_df["product_id"].astype(str) + " - " + analisa_df["product_name"]
+ filtered_df["product_display"] =  filtered_df["product_id"].astype(str) + " - " +  filtered_df["product_name"]
 
 # Create a dictionary to map the display name back to the Product ID
-product_map = dict(zip(analisa_df["product_display"], analisa_df["product_id"]))
+product_map = dict(zip( filtered_df["product_display"],  filtered_df["product_id"]))
 
 # Selectbox with formatted product ID and name
 selected_product_display = st.selectbox("Select Product", list(product_map.keys()))
 
 # Filter the dataframe using the actual Product ID
 selected_product_id = product_map[selected_product_display]
-filtered_df = analisa_df[analisa_df['product_id'] == selected_product_id]
+filtered_df2 =  filtered_df[ filtered_df['product_id'] == selected_product_id]
 
-#filtered_df['Landed DOI New'] = filtered_df['Landed DOI New']*0.8
-filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
+filtered_df2['Landed DOI New Adjusted'] = filtered_df['Landed DOI New Adjusted'].fillna(0)
 filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
 filtered_df['RL Qty NEW after MIN QTY WH'] = filtered_df['RL Qty NEW after MIN QTY WH'].fillna(0)
-filtered_df[['Landed DOI New', 'Landed DOI OLD']] = filtered_df[['Landed DOI New', 'Landed DOI OLD']].astype(float)
+filtered_df[['Landed DOI New Adjusted', 'Landed DOI OLD']] = filtered_df[['Landed DOI New Adjusted', 'Landed DOI OLD']].astype(float)
 filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 # Landed DOI Comparison
@@ -339,7 +363,7 @@ col1, col2 = st.columns(2)
 with col1:
     landed_doi_data = pd.DataFrame({
         "Category": ["Landed DOI Old", "Landed DOI New"],
-        "Value": [filtered_df['Landed DOI OLD'].mean(), filtered_df['Landed DOI New'].mean()]
+        "Value": [filtered_df2['Landed DOI OLD'].mean(), filtered_df2['Landed DOI New Adjusted'].mean()]
     })
 
     fig_doi = px.bar(landed_doi_data, y="Value", x="Category", orientation='v',
@@ -351,13 +375,13 @@ with col1:
 # RL Quantity Comparison
 with col2:
     rl_qty_data = pd.DataFrame({
-        "Category": ["RL Qty Actual", "RL Qty NEW after MIN QTY WH"],
+        "Category": ["RL Qty Actual", "RL Qty New"],
         "Value": [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()]
     })
 
     fig_rl = px.bar(rl_qty_data, y="Value", x="Category", orientation='v',
                     title="Comparison of RL Qty", color="Category",
-                    color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty NEW after MIN QTY WH": "rgb(119, 221, 119)"})
+                    color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty New": "rgb(119, 221, 119)"})
 
     st.plotly_chart(fig_rl, use_container_width=True)
 
