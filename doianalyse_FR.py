@@ -131,7 +131,7 @@ with st.expander("View Inbound Qty and OOS Graphs"):
     
     # Display the selected chart
     if chart_option == "Inbound Quantity Comparison":
-        st.plotly_chart(fig_inb)
+        st.plotly_chart(fig_inb,use_container_width=False)
         # Sum RL and Inbound quantities
         rl_actual = analisa_df['RL Qty Actual'].sum()
         rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
@@ -403,9 +403,9 @@ with col1:
                      color_discrete_map={"New": "rgb(119, 221, 119)", "Old": "rgb(255, 153, 153)"})
     
     fig_doi.update_layout(
-        width=270,  # Increase width
+        width=320,  # Increase width
         height=400,  # Increase height
-        margin=dict(l=10, r=25, t=50, b=30),  # Adjust margins
+        margin=dict(l=10, r=10, t=50, b=30),  # Adjust margins
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
@@ -423,9 +423,9 @@ with col2:
                     color_discrete_map={"Actual": "rgb(255, 153, 153)", "Project": "rgb(119, 221, 119)"})
 
     fig_rl.update_layout(
-        width=270,  # Increase width
+        width=320,  # Increase width
         height=400,  # Increase height
-        margin=dict(l=10, r=25, t=50, b=30),  # Adjust margins
+        margin=dict(l=10, r=19, t=50, b=30),  # Adjust margins
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
