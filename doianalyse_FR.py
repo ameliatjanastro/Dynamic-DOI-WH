@@ -219,7 +219,7 @@ grouped_df1.rename(columns={
     'Mode_Why_Increase_Decrease': 'Mode Reason'
 }, inplace=True)
 
-grouped_df1 = grouped_df1.sort_values(by='Count', ascending=False)
+grouped_df1 = grouped_df1.sort_values(by='Count SKU', ascending=False)
 
 
 # Calculate summary statistics
