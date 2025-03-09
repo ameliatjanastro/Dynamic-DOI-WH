@@ -3,6 +3,38 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 
+st.markdown(
+    """
+    <style>
+        /* Reduce space at the top of the page */
+        .block-container {
+            padding-top: 3rem;
+        }
+        /* Reduce overall font size */
+        html, body, [class*="css"] {
+            font-size: 12px !important;
+        }
+
+        /* Reduce dataframe font size */
+        div[data-testid="stDataFrame"] * {
+            font-size: 9px !important;
+        }
+        
+        /* Reduce table font size */
+        table {
+            font-size: 9px !important;
+        }
+
+        /* EXCLUDE Plotly Charts from Font Size Reduction */
+        .js-plotly-plot .plotly * {
+            font-size: 11px !important;  /* Ensures default or larger font */
+        }
+        
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Streamlit app title
 st.markdown("<h1 style='color: rgb(0, 0, 128);'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
 st.subheader("Overall View")
