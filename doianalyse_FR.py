@@ -153,21 +153,20 @@ with col1:
     selected_locations = st.multiselect("Select Location(s):", analisa_df['location_id'].unique())
 
 # Apply filtering based on selections
-filtered_df = analisa_df.copy()  # Start with full DataFrame
+filtered_df = analisa_df.copy()
 
 if selected_locations:
     filtered_df = filtered_df[filtered_df['location_id'].isin(selected_locations)]
 
 # Get unique categories and add "All" option
-available_categories = list(filtered_df['l1_category_name'].unique())
-available_categories.insert(0, "All")
+available_categories = ["All"] + list(filtered_df['l1_category_name'].unique())
 
 with col2:
-    selected_categories = st.multiselect("Select L1 Category(s):", available_categories, default="All")
+    selected_category = st.selectbox("Select L1 Category:", available_categories)
 
-# Apply category filtering
-if "All" not in selected_categories:
-    filtered_df = filtered_df[filtered_df['l1_category_name'].isin(selected_categories)]
+# Apply category filtering (skip if "All" is selected)
+if selected_category != "All":
+    filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
 
 # Apply the DOI filtering
 filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 100]
@@ -180,6 +179,12 @@ avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
 # Display results with 2 decimal places
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
+
+# Show SKUs where Landed DOI New is at least Landed DOI Old + 4
+sku_comparison_df = filtered_df[filtered_df['Landed DOI New'] >= (filtered_df['Landed DOI OLD'] + 4)][['sku_id', 'Landed DOI New', 'Landed DOI OLD']]
+
+st.write("### SKUs where Landed DOI New ≥ Landed DOI Old + 4")
+st.dataframe(sku_comparison_df)
 
 
 # Product ID filter
@@ -198,7 +203,7 @@ selected_product_display = st.selectbox("Select Product", list(product_map.keys(
 selected_product_id = product_map[selected_product_display]
 filtered_df = analisa_df[analisa_df['product_id'] == selected_product_id]
 
-
+#filtered_df['Landed DOI New'] = filtered_df['Landed DOI New']*0.8
 filtered_df['Landed DOI New'] = filtered_df['Landed DOI New'].fillna(0)
 filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
 filtered_df['RL Qty NEW after MIN QTY WH'] = filtered_df['RL Qty NEW after MIN QTY WH'].fillna(0)
