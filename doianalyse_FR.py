@@ -267,6 +267,12 @@ filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
 # Apply DOI filtering (optional, ensures values are within reasonable range)
 filtered_df = filtered_df[(filtered_df['Landed DOI New Adjusted'] <= 100)]
 
+filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
+
+# Exclude rows where l1_category_name contains "OFF"
+filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
+
+
 # Calculate averages
 avg_landed_doi_new2 = filtered_df['Landed DOI New Adjusted'].mean()
 
@@ -278,34 +284,26 @@ avg_landed_doi_old = filtered_df['Landed DOI OLD'].mean()
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new2:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Show SKUs where Landed DOI New is at least Landed DOI Old + 4
 sku_comparison_df = filtered_df[filtered_df['Landed DOI New'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New', 'Landed DOI OLD']]
 
 # Count number of SKUs
 num_skus = len(sku_comparison_df)
-# Display count
-st.write(f"**Total Number of SKUs where Landed DOI New ≥ Landed DOI Old + 4:** {num_skus}")
-st.write("### SKUs where Landed DOI New ≥ Landed DOI Old + 4")
-st.dataframe(sku_comparison_df)
-
-
-
-# Exclude SKUs where Landed DOI Old is 0
-filtered_df = filtered_df[filtered_df['Landed DOI OLD'] > 0]
-
-# Apply the 0.8 factor to Landed DOI New
-filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
-
-# Apply DOI filtering (optional, ensures values are within reasonable range)
-filtered_df = filtered_df[(filtered_df['Landed DOI New Adjusted'] <= 100) & (filtered_df['Landed DOI OLD'] <= 100)]
-
-# Calculate averages
-avg_landed_doi_new2 = filtered_df['Landed DOI New Adjusted'].mean()
-avg_landed_doi_old2 = filtered_df['Landed DOI OLD'].mean()
-
-# Display results with 2 decimal places
-st.write(f"**Average Landed DOI New (Adjusted):** {avg_landed_doi_new2:.2f}")
-st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old2:.2f}")
 
 # Find SKUs where Adjusted Landed DOI New is at least Landed DOI Old + 4
 sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
