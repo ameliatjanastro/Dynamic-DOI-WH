@@ -56,14 +56,16 @@ total_df['Date'] = pd.to_datetime(total_df['Date']).dt.date
 analisa_df['Inbound_Date NEW'] = pd.to_datetime(analisa_df['Inbound Date NEW']).dt.date
 
 # Adjust inbound dates to align with OOS dates (OOS dates = Inb dates +2)
-inb_df['OOS_Date'] = inb_df['Date'] + pd.Timedelta(days=2)
+inb_df['OOS Date'] = inb_df['Date'] + pd.Timedelta(days=2)
+inb_df['OOS Date'] = inb_df['OOS Date'].dt.date  # Convert to date only (removes time)
+
 
 # Merge inbound data with total data on adjusted OOS dates
 merged_df = pd.merge(total_df, inb_df[['Date', 'OOS_Date', 'Actual', 'Max Projected']],
                      left_on='Date', right_on='OOS_Date', how='left')
 
 # Calculate projected OOS% based on inbound quantity ratio
-merged_df['Projected % OOS Contribution'] = merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])
+merged_df['Projected % OOS Contribution'] = (merged_df['% OOS Contribution'] * (merged_df['Actual'] / merged_df['Max Projected'])).round(2)
 merged_df2 = merged_df[['Date_y', 'Actual', 'Max Projected', '% OOS Contribution', 'Projected % OOS Contribution']]
 merged_df2.rename(columns={'Date_y': 'Date'}, inplace=True) 
 merged_df2 = merged_df2.sort_values(by='Date', ascending=True)
@@ -109,11 +111,11 @@ fig_inb.update_layout(
 )
 
 # Create the OOS percentage line chart
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+fig_oos = px.line(merged_df, x='OOS Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 
-fig_oos.for_each_trace(lambda t: t.update(name="% Actual" if t.name == "% OOS Contribution" else "% Project"))
+fig_oos.for_each_trace(lambda t: t.update(name="Actual" if t.name == "% OOS Contribution" else "Project"))
 
 fig_oos.update_layout(
     width=700,  # Reduce width
