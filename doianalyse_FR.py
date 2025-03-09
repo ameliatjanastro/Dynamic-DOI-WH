@@ -173,8 +173,8 @@ if chart_option == "Inbound Quantity Comparison":
     rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
     
     # Sum Inbound quantities from Inb_df
-    inb_actual = Inb_df['Actual'].sum()
-    inb_max_projected = Inb_df['Max Projected'].sum()
+    inb_actual = inb_df['Actual'].sum()
+    inb_max_projected = inb_df['Max Projected'].sum()
     
     # Create a dataframe for visualization
     conversion_data = pd.DataFrame({
