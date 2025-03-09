@@ -108,7 +108,7 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 fig_oos.update_layout(
-    width=800,  # Reduce width
+    width=700,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(font=dict(size=8))  # Make legend text smaller
@@ -393,8 +393,8 @@ with col1:
                      color_discrete_map={"Landed DOI New": "rgb(119, 221, 119)", "Landed DOI Old": "rgb(255, 153, 153)"})
     
     fig_doi.update_layout(
-    width=300,  # Reduce width
-    height=300,  # Reduce height
+    width=270,  # Reduce width
+    height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(font=dict(size=8))  # Make legend text smaller
     )
@@ -413,8 +413,8 @@ with col2:
                     color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty New": "rgb(119, 221, 119)"})
 
     fig_rl.update_layout(
-    width=300,  # Reduce width
-    height=300,  # Reduce height
+    width=270,  # Reduce width
+    height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(font=dict(size=8))  # Make legend text smaller
     )
