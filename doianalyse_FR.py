@@ -181,8 +181,11 @@ st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
 # Show SKUs where Landed DOI New is at least Landed DOI Old + 4
-sku_comparison_df = filtered_df[filtered_df['Landed DOI New'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_id', 'Landed DOI New', 'Landed DOI OLD']]
+sku_comparison_df = filtered_df[filtered_doi_df['Landed DOI New'] >= (filtered_doi_old_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New', 'Landed DOI OLD']]
+num_skus = sku_comparison_df.shape[0]
 
+# Display count
+st.write(f"**Total Number of SKUs where Landed DOI New ≥ Landed DOI Old + 4:** {num_skus}")
 st.write("### SKUs where Landed DOI New ≥ Landed DOI Old + 4")
 st.dataframe(sku_comparison_df)
 
