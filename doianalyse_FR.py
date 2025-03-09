@@ -97,7 +97,7 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
                  title='Actual vs Projected Inbound Quantity',
                  barmode='group')
 fig_inb.update_layout(
-    width=800,  # Reduce width
+    width=700,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(font=dict(size=8))  # Make legend text smaller
@@ -384,7 +384,7 @@ col1, col2 = st.columns(2)
 # Landed DOI Comparison
 with col1:
     landed_doi_data = pd.DataFrame({
-        "Category": ["Landed DOI Old", "Landed DOI New"],
+        "Category": ["Old", "New"],
         "Value": [filtered_df2['Landed DOI OLD'].mean(), filtered_df2['Landed DOI New Adjusted'].mean()]
     })
 
@@ -395,7 +395,7 @@ with col1:
     fig_doi.update_layout(
         width=270,  # Increase width
         height=400,  # Increase height
-        margin=dict(l=10, r=25, t=30, b=30),  # Adjust margins
+        margin=dict(l=10, r=25, t=50, b=30),  # Adjust margins
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
@@ -404,7 +404,7 @@ with col1:
 # RL Quantity Comparison
 with col2:
     rl_qty_data = pd.DataFrame({
-        "Category": ["RL Qty Actual", "RL Qty New"],
+        "Category": ["Actual", "Projected"],
         "Value": [filtered_df2['RL Qty Actual'].mean(), filtered_df2['RL Qty NEW after MIN QTY WH'].mean()]
     })
 
@@ -415,7 +415,7 @@ with col2:
     fig_rl.update_layout(
         width=270,  # Increase width
         height=400,  # Increase height
-        margin=dict(l=10, r=25, t=30, b=30),  # Adjust margins
+        margin=dict(l=10, r=25, t=50, b=30),  # Adjust margins
         legend=dict(font=dict(size=8))  # Slightly increase legend text size
     )
 
