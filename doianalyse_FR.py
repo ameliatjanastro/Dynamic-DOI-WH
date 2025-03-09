@@ -42,7 +42,7 @@ st.markdown(
 
 # Streamlit app title
 st.markdown("<h1 style='color: rgb(0, 0, 128);'>Why use L2PO for DOI Policy?</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='color: rgb(128, 128, 128);'>Overall View</h4>")
+st.markdown("<h4 style='color: rgb(128, 128, 128);'>Overall View</h4>", unsafe_allow_html=True)
 st.markdown(" ")
 
 # Load CSV files
@@ -185,7 +185,7 @@ with st.expander("View Inbound Qty and OOS Graphs"):
     
 st.markdown("----")
 
-st.subheader("<h4 style='color: rgb(0, 0, 128);'>Deep Dive into RL Engine</h4>")
+st.subheader("<h4 style='color: rgb(0, 0, 128);'>Deep Dive into RL Engine</h4>", unsafe_allow_html=True)
 
 
 st.markdown("First we excluded some SKUs, Focus on SKUs with Landed DOI Increase/Decrease :):")
@@ -263,7 +263,7 @@ with col2:
 
 st.markdown("----")
 
-st.subheader("<h6>Landed DOI Comparison -  only for KOS</h6>")
+st.subheader("<h6>Landed DOI Comparison -  only for KOS</h6>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
@@ -348,7 +348,7 @@ st.dataframe(styled_df)
 # Product ID filter
 st.markdown("----")
 
-st.markddown("<h4 style='color: rgb(128, 128, 128);'>SKU Level View</h4>")
+st.markddown("<h4 style='color: rgb(128, 128, 128);'>SKU Level View</h4>", unsafe_allow_html=True)
 # Create a separate DataFrame for SKU Level View
 filtered_sku_df = analisa_df.copy()
 
