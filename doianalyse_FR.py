@@ -80,7 +80,26 @@ with col1:
   **Projected RL:** <span style='color: green; font-weight: 600; font-style: italic;'>1,214,641</span>  
   """, unsafe_allow_html=True)
 
-st.markdown("----")
+analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].replace(',', '', regex=True).apply(pd.to_numeric, errors='coerce')
+analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
+analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
+analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].apply(pd.to_numeric, errors='coerce')
+
+analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
+analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
+
+filtered_df1 = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
+    ])
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
+
+filtered_df2 = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Landed DOI aman tanpa order', 'OOS WH but galaku, consider derange'
+    ])
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
+
 
 # Plot actual vs projected inbound quantity
 
@@ -95,6 +114,7 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 
 st.markdown("----")
+
 # Selectbox for choosing which chart to display
 chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
 
@@ -163,25 +183,6 @@ else:
 st.markdown("----")
 
 st.subheader("Deep Dive into RL Engine")
-analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].replace(',', '', regex=True).apply(pd.to_numeric, errors='coerce')
-analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
-analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
-analisa_df[['Landed DOI New', 'Landed DOI OLD']] = analisa_df[['Landed DOI New', 'Landed DOI OLD']].apply(pd.to_numeric, errors='coerce')
-
-analisa_df['RL Qty Actual'] = analisa_df['RL Qty Actual'].fillna(0)
-analisa_df['RL Qty NEW after MIN QTY WH'] = analisa_df['RL Qty NEW after MIN QTY WH'].fillna(0)
-
-filtered_df1 = analisa_df[
-    analisa_df['Why Increase/Decrease?'].isin([
-        'Harus order, OOS WH', 'Jadi order karena min qty WH dan multiplier'
-    ])
-][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
-
-filtered_df2 = analisa_df[
-    analisa_df['Why Increase/Decrease?'].isin([
-        'Landed DOI aman tanpa order', 'OOS WH but galaku, consider derange'
-    ])
-][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Landed DOI New','Why Increase/Decrease?','Verdict','Check Landed DOI if jadi gaorder']]
 
 grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False).agg(
     Product_Count=('product_id', 'nunique'),
