@@ -338,7 +338,7 @@ st.dataframe(styled_df)
 st.markdown("----")
 
 st.subheader("SKU Level View")
- filtered_df["product_display"] =  filtered_df["product_id"].astype(str) + " - " +  filtered_df["product_name"]
+filtered_df["product_display"] =  filtered_df["product_id"].astype(str) + " - " +  filtered_df["product_name"]
 
 # Create a dictionary to map the display name back to the Product ID
 product_map = dict(zip( filtered_df["product_display"],  filtered_df["product_id"]))
