@@ -120,57 +120,58 @@ chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Com
 
 # Display the selected chart
 if chart_option == "Inbound Quantity Comparison":
-    st.plotly_chart(fig_inb)
-
-    # Sum RL quantities from analisa_df
+    # Sum RL and Inbound quantities
     rl_actual = analisa_df['RL Qty Actual'].sum()
     rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
+    inb_actual = Inb_df['Actual'].sum()
+    inb_max_projected = Inb_df['Max Projected'].sum()
     
-    # Sum Inbound quantities from Inb_df
-    inb_actual = inb_df['Actual'].sum()
-    inb_max_projected = inb_df['Max Projected'].sum()
+    # Categories and values for stacking
+    categories = ['Actual', 'Projected']
+    rl_values = [rl_actual, rl_new]  # RL Qty (bottom)
+    inb_values = [inb_actual, inb_max_projected]  # Inbound Qty (top)
     
-    # Create a dataframe for visualization
-    conversion_data = pd.DataFrame({
-    'Category': ['Actual', 'Projected'],
-    'RL Qty': [rl_actual, rl_new],
-    'Inbound Qty': [inb_actual, inb_max_projected]
-    })
+    # Create the stacked bar chart using Plotly Graph Objects
+    fig = go.Figure()
     
-    # Melt DataFrame to match Plotly's stacked bar format
-    conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
-    
-    # Define custom colors: lighter gray for RL, pastel green for Inbound
-    color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
-    
-    # Create a stacked bar chart using Plotly
-    fig = px.bar(
-        conversion_data,
-        x='Quantity',
-        y='Category',
-        color='Type',
+    # Add RL Qty (gray, at the bottom)
+    fig.add_trace(go.Bar(
+        y=categories,
+        x=rl_values,
+        name="RL Qty",
         orientation='h',
-        title="RL to Inb Qty Conversion",
-        text='Quantity',
-        color_discrete_map=color_map
-    )
+        marker=dict(color='#d3d3d3'),
+        text=rl_values,
+        textposition='inside'
+    ))
     
-    # Adjust text position and layout (reduce height)
-    fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
+    # Add Inbound Qty (green, stacked on top)
+    fig.add_trace(go.Bar(
+        y=categories,
+        x=inb_values,
+        name="Inbound Qty",
+        orientation='h',
+        marker=dict(color='#77dd77'),
+        text=inb_values,
+        textposition='inside'
+    ))
+    
+    # Update layout to ensure stacking
     fig.update_layout(
+        title="RL Qty vs Inbound Qty (Stacked Comparison)",
         xaxis_title="Total Quantity",
         yaxis_title="",
+        barmode='stack',  # Forces stacking instead of side-by-side bars
+        height=350,  # Reduce chart height
         showlegend=True,
-        barmode='relative',
-        height=300,
         legend=dict(
-        font=dict(size=10),  # Reduce legend text size
-        title_font=dict(size=11),  # Reduce legend title size
-        yanchor="top", 
-        y=0.99, 
-        xanchor="right", 
-        x=0.99
-    )
+            font=dict(size=10),
+            title_font=dict(size=11),
+            yanchor="top",
+            y=0.99,
+            xanchor="right",
+            x=0.99
+        )
     )
     
     # Display in Streamlit
@@ -207,7 +208,7 @@ total_productsold = filtered_df2['product_id'].nunique()
 landed_doi_yg_gaorder = filtered_df2['Landed DOI New'].mean().astype(float)
 
 # Display the table without an index
-st.markdown("----")
+
 st.markdown("Below are the total no. of SKUs that we **did not** order but **would order** with new doi policy:")
 col1, col2 = st.columns([2.5, 2])
 with col1:
