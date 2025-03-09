@@ -261,8 +261,7 @@ with col1:
 # Get unique categories and add "All" option
 filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
 # Exclude rows where l1_category_name contains "OFF"
-filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
-filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("Olahraga", na=False, case=False)]
+filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("Olahraga|OFF|Private", na=False, case=False)]
 available_categories = ["All"] + list (filtered_df[(filtered_df['location_id'] == 40)]['l1_category_name'].unique())
 
 with col2:
@@ -278,7 +277,7 @@ filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
 high_diff_mask = (filtered_df['Landed DOI New'] - filtered_df['Landed DOI OLD']) > 6
 
 # Apply an additional 25% reduction for those rows
-filtered_df.loc[high_diff_mask, 'Landed DOI New Adjusted'] *= 0.85  # Reduce by 25%
+filtered_df.loc[high_diff_mask, 'Landed DOI New Adjusted'] *= 0.9  # Reduce by 10%
 
 # Apply DOI filtering (optional, ensures values are within reasonable range)
 filtered_df = filtered_df[(filtered_df['Landed DOI New Adjusted'] <= 100)]
