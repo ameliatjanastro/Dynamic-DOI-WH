@@ -263,7 +263,7 @@ with col2:
 
 st.markdown("----")
 
-st.markdown("<h5 style='color: rgb(139, 69, 19);'>Landed DOI Comparison -  only for KOS</h6>", unsafe_allow_html=True)
+st.markdown("<h5 style='color: rgb(139, 69, 19);'>Landed DOI Comparison -  only for KOS</h5>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
