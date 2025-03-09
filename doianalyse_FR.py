@@ -162,6 +162,8 @@ st.markdown("----")
 
 st.subheader("Deep Dive into RL Engine")
 
+
+st.markdown("First we excluded some SKUs:")
 excluded_df = analisa_df[
     analisa_df['Verdict'].isin([
         'Excluded, out of scope since current doi > 100', 'Excluded, same order qty or gaorder','Landed DOI Sama'
@@ -172,8 +174,14 @@ grouped_exclude = excluded_df.groupby('Verdict', as_index=False).agg(
     Product_Count=('product_id', 'nunique')
 )
 
-st.dataframe(grouped_exclude, hide_index=True, use_container_width= True)
-
+col1, col2 = st.columns([2.5, 2])
+with col1:
+    st.dataframe(grouped_exclude, hide_index=True, use_container_width= True)
+with col2:
+     # Text area for notes
+    notes = """
+    Focus on SKUs with Landed DOI Increase/Decrease :)
+    """
 
 filtered_df1 = analisa_df[
     analisa_df['Why Increase/Decrease?'].isin([
@@ -229,22 +237,18 @@ with col2:
     st.write(f"**Sum of RL Qty yang jadi gaorder:** {total_rl_qty_old}")
     st.write(f"**Blended DOI yg gaorder:** {landed_doi_yg_gaorder}")
 
-# Show summary at the bottom
+st.markdown("----")
 
-st.subheader("Landed DOI Comparison")
-#st.markdown("*exc. current doi wh + ospo > 100*")
-# Exclude Landed DOI values greater than 21 before calculating the average
+st.subheader("Landed DOI Comparison -  only for KOS")
+
 col1, col2 = st.columns(2)
 
 # Multiselect filters
 with col1:
-    selected_locations = st.selectbox("Select Location(s):", analisa_df['location_id'].unique())
-
-# Apply filtering based on selections
-filtered_df = analisa_df.copy()
-
-if selected_locations:
-    filtered_df = filtered_df[filtered_df['location_id']== selected_locations]
+    filtered_df = analisa_df.copy()
+    
+    allowed_location = filtered_df[filtered_df ['location_id'] == 40]['location_id'].unique()
+    selected_location = st.selectbox("Select Location:", allowed_location)
 
 # Get unique categories and add "All" option
 available_categories = ["All"] + list(filtered_df['l1_category_name'].unique())
@@ -256,13 +260,9 @@ with col2:
 if selected_category != "All":
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
 
-# Apply the DOI filtering
-filtered_doi_df = filtered_df[filtered_df['Landed DOI New'] <= 100]
-filtered_doi_old_df = filtered_df[filtered_df['Landed DOI OLD'] <= 100]
-
 # Calculate averages
-avg_landed_doi_new = filtered_doi_df['Landed DOI New'].mean() * 0.8
-avg_landed_doi_old = filtered_doi_old_df['Landed DOI OLD'].mean()
+avg_landed_doi_new = filtered_df['Landed DOI New'].mean()
+avg_landed_doi_old = filtered_df['Landed DOI OLD'].mean()
 
 # Display results with 2 decimal places
 st.write(f"**Average Landed DOI New:** {avg_landed_doi_new:.2f}")
