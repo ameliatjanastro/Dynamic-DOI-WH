@@ -104,7 +104,7 @@ fig_inb.update_layout(
 )
 
 # Create the OOS percentage line chart
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contr.', 'Projected % OOS Contr.'],
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 fig_oos.update_layout(
@@ -183,7 +183,7 @@ excluded_df = analisa_df[
 ][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
 
 grouped_exclude = excluded_df.groupby('Verdict', as_index=False).agg(
-    Product_Count=('product_id', 'nunique')
+    Count SKU=('product_id', 'nunique')
 )
 
 col1, col2 = st.columns([2.5, 2])
@@ -212,7 +212,7 @@ grouped_df1 = filtered_df1.groupby('l1_category_name', as_index=False).agg(
 # Rename columns for display
 grouped_df1.rename(columns={
     'l1_category_name': 'L1 Category',
-    'Product_Count': 'Count',
+    'Product_Count': 'Count SKU',
     'Mode_Why_Increase_Decrease': 'Mode Reason'
 }, inplace=True)
 
@@ -369,7 +369,7 @@ selected_product_display = st.selectbox("Select Product", list(product_map.keys(
 selected_product_id = product_map[selected_product_display]
 filtered_df2 =  filtered_sku_df[ filtered_sku_df['product_id'] == selected_product_id]
 
-filtered_df2['Landed DOI New Adjusted'] = filtered_sku_df['Landed DOI New Adjusted'].fillna(0)
+filtered_df2['Landed DOI New Adjusted'] = filtered_sku_df['Landed DOI New Adjusted'].fillna(0).astype(int)
 filtered_df2['Landed DOI OLD'] = filtered_sku_df['Landed DOI OLD'].fillna(0)
 filtered_df2['RL Qty NEW after MIN QTY WH'] = filtered_sku_df['RL Qty NEW after MIN QTY WH'].fillna(0)
 filtered_df2[['Landed DOI New Adjusted', 'Landed DOI OLD']] = filtered_sku_df[['Landed DOI New Adjusted', 'Landed DOI OLD']].astype(float)
@@ -388,6 +388,13 @@ with col1:
     fig_doi = px.bar(landed_doi_data, y="Value", x="Category", orientation='v',
                      title="Comparison of Landed DOI New vs Old", color="Category",
                      color_discrete_map={"Landed DOI New": "rgb(119, 221, 119)", "Landed DOI Old": "rgb(255, 153, 153)"})
+    
+    fig_doi.update_layout(
+    width=300,  # Reduce width
+    height=300,  # Reduce height
+    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
+    legend=dict(font=dict(size=8))  # Make legend text smaller
+    )
 
     st.plotly_chart(fig_doi, use_container_width=True)
 
@@ -401,6 +408,13 @@ with col2:
     fig_rl = px.bar(rl_qty_data, y="Value", x="Category", orientation='v',
                     title="Comparison of RL Qty", color="Category",
                     color_discrete_map={"RL Qty Actual": "rgb(255, 153, 153)", "RL Qty New": "rgb(119, 221, 119)"})
+
+    fig_rl.update_layout(
+    width=300,  # Reduce width
+    height=300,  # Reduce height
+    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
+    legend=dict(font=dict(size=8))  # Make legend text smaller
+    )
 
     st.plotly_chart(fig_rl, use_container_width=True)
 
