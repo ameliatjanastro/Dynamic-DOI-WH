@@ -185,7 +185,7 @@ with st.expander("View Inbound Qty and OOS Graphs"):
     
 st.markdown("----")
 
-st.subheader("<h4 style='color: rgb(0, 0, 128);'>Deep Dive into RL Engine</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='color: rgb(0, 0, 128);'>Deep Dive into RL Engine</h4>", unsafe_allow_html=True)
 
 
 st.markdown("First we excluded some SKUs, Focus on SKUs with Landed DOI Increase/Decrease :):")
