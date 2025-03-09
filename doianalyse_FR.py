@@ -102,9 +102,9 @@ fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" el
 fig_inb.update_layout(
     width=800,  # Reduce width
     height=400,  # Reduce height
-    margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
+    margin=dict(l=20, r=0, t=40, b=20),  # Adjust margins
     legend=dict(
-        font=dict(size=6)
+        font=dict(size=8)
     )  # Make legend text smaller
 )
 
