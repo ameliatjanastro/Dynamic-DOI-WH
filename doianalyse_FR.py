@@ -122,7 +122,7 @@ fig_oos.for_each_trace(lambda t: t.update(name="% OOS Actual" if t.name == "% OO
 
 fig_oos.update_layout(
     width=500,  # Reduce width
-    height=400,  # Reduce height
+    height=450,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(
         orientation="v",  # Horizontal legend
