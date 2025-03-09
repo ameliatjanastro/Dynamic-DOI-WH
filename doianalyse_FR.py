@@ -197,6 +197,7 @@ col1, col2 = st.columns(2)
 with col1:
     selected_locations = st.selectbox("Select Location(s):", analisa_df['location_id'].unique())
 
+
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()
 
