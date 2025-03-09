@@ -124,7 +124,7 @@ landed_doi_yg_gaorder = filtered_df2['Landed DOI New'].mean().astype(float)
 # Display the table without an index
 st.markdown("----")
 st.markdown("Below are the total no. of SKUs that we **did not** order but **would order** with new doi policy:")
-col1, col2 = st.columns([3, 2])
+col1, col2 = st.columns([2.5, 2])
 with col1:
   st.data_editor(grouped_df1, hide_index=True, use_container_width= True)
 with col2:
