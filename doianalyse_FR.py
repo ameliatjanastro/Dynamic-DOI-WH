@@ -251,12 +251,12 @@ with col1:
     selected_location = st.selectbox("Select Location:", allowed_location)
 
 # Get unique categories and add "All" option
+filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
+# Exclude rows where l1_category_name contains "OFF"
+filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
 available_categories = ["All"] + list (filtered_df[(filtered_df['location_id'] == 40)]['l1_category_name'].unique())
 
 with col2:
-    filtered_df = filtered_df[filtered_df['Landed DOI OLD'].notna()]
-    # Exclude rows where l1_category_name contains "OFF"
-    filtered_df = filtered_df[~filtered_df['l1_category_name'].str.contains("OFF", na=False, case=False)]
     selected_category = st.selectbox("Select L1 Category:", available_categories)
 
 # Apply category filtering (skip if "All" is selected)
