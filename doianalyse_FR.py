@@ -251,7 +251,7 @@ with col1:
     selected_location = st.selectbox("Select Location:", allowed_location)
 
 # Get unique categories and add "All" option
-available_categories = ["All"] + list(filtered_df['l1_category_name'].unique())
+available_categories = ["All"] + list (filtered_df[(filtered_df['location_id'] == 40)]['l1_category_name'].unique())
 
 with col2:
     selected_category = st.selectbox("Select L1 Category:", available_categories)
@@ -260,8 +260,7 @@ with col2:
 if selected_category != "All":
     filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
 
-filtered_df = filtered_df[(filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))& 
-    (filtered_df['Why Increase/Decrease?'] != 'Jadi order karena min qty WH dan multiplier')]
+filtered_df = filtered_df[(filtered_df['Landed DOI OLD'] != 0) & (~filtered_df['product_id'].isin(excluded_df['product_id']))]
 
 filtered_df['Landed DOI New Adjusted'] = filtered_df['Landed DOI New'] * 0.8
 
