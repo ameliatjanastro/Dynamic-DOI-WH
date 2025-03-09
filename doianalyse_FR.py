@@ -100,7 +100,7 @@ fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
 fig_inb.for_each_trace(lambda t: t.update(name="Actual" if t.name == "Actual" else "Project"))
 
 fig_inb.update_layout(
-    width=700,  # Reduce width
+    width=800,  # Reduce width
     height=400,  # Reduce height
     margin=dict(l=20, r=20, t=40, b=20),  # Adjust margins
     legend=dict(
