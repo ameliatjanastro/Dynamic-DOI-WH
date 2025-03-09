@@ -80,8 +80,89 @@ with col1:
   **Projected RL:** <span style='color: green; font-weight: 600; font-style: italic;'>1,214,641</span>  
   """, unsafe_allow_html=True)
 
+st.markdown("----")
+
+# Plot actual vs projected inbound quantity
+
+fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
+                 labels={'value': 'Inbound Quantity', 'variable': 'Type'},
+                 title='Actual vs Projected Inbound Quantity',
+                 barmode='group')
+
+# Create the OOS percentage line chart
+fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
+                  labels={'value': 'OOS %', 'variable': 'Type'},
+                  title='Actual vs Projected Out-of-Stock Percentage Trend')
+
+st.markdown("----")
+# Selectbox for choosing which chart to display
+chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
+
+# Display the selected chart
+if chart_option == "Inbound Quantity Comparison":
+    st.plotly_chart(fig_inb)
+
+    # Sum RL quantities from analisa_df
+    rl_actual = analisa_df['RL Qty Actual'].sum()
+    rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
+    
+    # Sum Inbound quantities from Inb_df
+    inb_actual = inb_df['Actual'].sum()
+    inb_max_projected = inb_df['Max Projected'].sum()
+    
+    # Create a dataframe for visualization
+    conversion_data = pd.DataFrame({
+    'Category': ['Actual', 'Projected'],
+    'RL Qty': [rl_actual, rl_new],
+    'Inbound Qty': [inb_actual, inb_max_projected]
+    })
+    
+    # Melt DataFrame to match Plotly's stacked bar format
+    conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
+    
+    # Define custom colors: lighter gray for RL, pastel green for Inbound
+    color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
+    
+    # Create a stacked bar chart using Plotly
+    fig = px.bar(
+        conversion_data,
+        x='Quantity',
+        y='Category',
+        color='Type',
+        orientation='h',
+        title="RL to Inb Qty Conversion",
+        text='Quantity',
+        color_discrete_map=color_map
+    )
+    
+    # Adjust text position and layout (reduce height)
+    fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
+    fig.update_layout(
+        xaxis_title="Total Quantity",
+        yaxis_title="",
+        showlegend=True,
+        barmode='stack',
+        height=300,
+        legend=dict(
+        font=dict(size=10),  # Reduce legend text size
+        title_font=dict(size=11),  # Reduce legend title size
+        yanchor="top", 
+        y=0.99, 
+        xanchor="right", 
+        x=0.99
+    )
+    )
+    
+    # Display in Streamlit
+    st.plotly_chart(fig, use_container_width=False)  # Reduce overall size
 
 
+else:
+    st.plotly_chart(fig_oos)
+    
+st.markdown("----")
+
+st.subheader("Deep Dive into RL Engine")
 analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = analisa_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].replace(',', '', regex=True).apply(pd.to_numeric, errors='coerce')
 analisa_df['Landed DOI New'] = analisa_df['Landed DOI New'].fillna(0)
 analisa_df['Landed DOI OLD'] = analisa_df['Landed DOI OLD'].fillna(0)
@@ -142,82 +223,8 @@ with col2:
     st.write(f"**Count SKUs yg jadi gaorder:** {total_productsold}")
     st.write(f"**Sum of RL Qty yang jadi gaorder:** {total_rl_qty_old}")
     st.write(f"**Blended DOI yg gaorder:** {landed_doi_yg_gaorder}")
-    
-
 
 # Show summary at the bottom
-
-
-# Plot actual vs projected inbound quantity
-
-fig_inb = px.bar(inb_df, x='Date', y=['Actual', 'Max Projected'],
-                 labels={'value': 'Inbound Quantity', 'variable': 'Type'},
-                 title='Actual vs Projected Inbound Quantity',
-                 barmode='group')
-
-# Create the OOS percentage line chart
-fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected % OOS Contribution'],
-                  labels={'value': 'OOS %', 'variable': 'Type'},
-                  title='Actual vs Projected Out-of-Stock Percentage Trend')
-
-st.markdown("----")
-# Selectbox for choosing which chart to display
-chart_option = st.selectbox("Select a graph to display:", ["Inbound Quantity Comparison", "Out-of-Stock % Comparison"])
-
-# Display the selected chart
-if chart_option == "Inbound Quantity Comparison":
-    st.plotly_chart(fig_inb)
-
-    # Sum RL quantities from analisa_df
-    rl_actual = analisa_df['RL Qty Actual'].sum()
-    rl_new = analisa_df['RL Qty NEW after MIN QTY WH'].sum()
-    
-    # Sum Inbound quantities from Inb_df
-    inb_actual = inb_df['Actual'].sum()
-    inb_max_projected = inb_df['Max Projected'].sum()
-    
-    # Create a dataframe for visualization
-    conversion_data = pd.DataFrame({
-    'Category': ['Actual', 'Projected'],
-    'RL Qty': [rl_actual, rl_new],
-    'Inbound Qty': [inb_actual, inb_max_projected]
-    })
-    
-    # Melt DataFrame to match Plotly's stacked bar format
-    conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
-    
-    # Define custom colors: lighter gray for RL, pastel green for Inbound
-    color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
-    
-    # Create a stacked bar chart using Plotly
-    fig = px.bar(
-        conversion_data,
-        x='Quantity',
-        y='Category',
-        color='Type',
-        orientation='h',
-        title="RL Qty vs Inbound Qty (Stacked Comparison)",
-        text='Quantity',
-        color_discrete_map=color_map
-    )
-    
-    # Adjust text position and layout (reduce height)
-    fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
-    fig.update_layout(
-        xaxis_title="Total Quantity",
-        yaxis_title="",
-        showlegend=True,
-        barmode='stack',
-        height=350  # Reduce chart height
-    )
-    
-    # Display in Streamlit
-    st.plotly_chart(fig, use_container_width=False)  # Reduce overall size
-
-
-else:
-    st.plotly_chart(fig_oos)
-st.markdown("----")
 
 st.subheader("Landed DOI Comparison")
 #st.markdown("*exc. current doi wh + ospo > 100*")
