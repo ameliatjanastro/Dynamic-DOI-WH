@@ -102,8 +102,6 @@ fig_oos = px.line(merged_df, x='OOS_Date', y=['% OOS Contribution', 'Projected %
                   labels={'value': 'OOS %', 'variable': 'Type'},
                   title='Actual vs Projected Out-of-Stock Percentage Trend')
 
-st.markdown("----")
-
 # Selectbox for choosing which chart to display
 with st.expander("View Inbound Qty and OOS Graphs"):
     
@@ -164,6 +162,17 @@ st.markdown("----")
 
 st.subheader("Deep Dive into RL Engine")
 
+excluded_df = analisa_df[
+    analisa_df['Why Increase/Decrease?'].isin([
+        'Excluded, out of scope since current doi > 100', 'Excluded, same order qty or gaorder','Landed DOI Sama'
+    ])
+][['product_id', 'product_name','l1_category_name', 'RL Qty Actual', 'RL Qty NEW after MIN QTY WH','Why Increase/Decrease?','Verdict']]
+
+grouped_exclude = excluded_df.groupby('Why Increase/Decrease?', as_index=False).agg(
+    Product_Count=('product_id', 'nunique')
+)
+
+st.dataframe(grouped_exclude, hide_index=True, use_container_width= True)
 
 
 filtered_df1 = analisa_df[
@@ -206,7 +215,7 @@ landed_doi_yg_gaorder = filtered_df2['Landed DOI New'].mean().astype(float)
 st.markdown("Below are the total no. of SKUs that we **did not** order but **would order** with new doi policy:")
 col1, col2 = st.columns([2.5, 2])
 with col1:
-  st.data_editor(grouped_df1, hide_index=True, use_container_width= True)
+  st.dataframe(grouped_df1, hide_index=True, use_container_width= True)
 with col2:
      # Text area for notes
     notes = """
