@@ -195,24 +195,24 @@ col1, col2 = st.columns(2)
 
 # Multiselect filters
 with col1:
-    selected_locations = st.selectbox("Select Location(s):", analisa_df['location_id'].unique())
+    selected_locations2 = st.selectbox("Select Location(s):", analisa_df['location_id'].unique())
 
 
 # Apply filtering based on selections
 filtered_df = analisa_df.copy()
 
 if selected_locations:
-    filtered_df = filtered_df[filtered_df['location_id'] == selected_locations]
+    filtered_df = filtered_df[filtered_df['location_id'] == selected_locations2]
 
 # Get unique categories and add "All" option
-available_categories = ["All"] + list(filtered_df['l1_category_name'].unique())
+available_categories2 = ["All"] + list(filtered_df['l1_category_name'].unique())
 
 with col2:
-    selected_category = st.selectbox("Select L1 Category:", available_categories)
+    selected_category2 = st.selectbox("Select L1 Category:", available_categories2)
 
 # Apply category filtering (skip if "All" is selected)
-if selected_category != "All":
-    filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category]
+if selected_category2 != "All":
+    filtered_df = filtered_df[filtered_df['l1_category_name'] == selected_category2]
 
 # Exclude SKUs where Landed DOI Old is 0
 filtered_df = filtered_df[filtered_df['Landed DOI OLD'] > 0]
@@ -232,17 +232,17 @@ st.write(f"**Average Landed DOI New (Adjusted):** {avg_landed_doi_new:.2f}")
 st.write(f"**Average Landed DOI Old:** {avg_landed_doi_old:.2f}")
 
 # Find SKUs where Adjusted Landed DOI New is at least Landed DOI Old + 4
-sku_comparison_df = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
+sku_comparison_df2 = filtered_df[filtered_df['Landed DOI New Adjusted'] >= (filtered_df['Landed DOI OLD'] + 4)][['product_name', 'Landed DOI New Adjusted', 'Landed DOI OLD']]
 
 # Count number of SKUs
-num_skus = len(sku_comparison_df)
+num_skus2 = len(sku_comparison_df2)
 
 # Display count
-st.write(f"**Total Number of SKUs where Adjusted Landed DOI New ≥ Landed DOI Old + 4:** {num_skus}")
+st.write(f"**Total Number of SKUs where Adjusted Landed DOI New ≥ Landed DOI Old + 4:** {num_skus2}")
 
 # Display DataFrame
 st.write("### SKUs where Adjusted Landed DOI New ≥ Landed DOI Old + 4")
-st.dataframe(sku_comparison_df)
+st.dataframe(sku_comparison_df2)
 
 
 
