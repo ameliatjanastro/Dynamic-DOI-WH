@@ -177,18 +177,17 @@ if chart_option == "Inbound Quantity Comparison":
     inb_max_projected = inb_df['Max Projected'].sum()
     
     # Create a dataframe for visualization
-    # Create a DataFrame for stacked bars
     conversion_data = pd.DataFrame({
-        'Category': ['Actual', 'Projected'],
-        'RL Qty': [rl_actual, rl_new],
-        'Inbound Qty': [inb_actual, inb_max_projected]
+    'Category': ['Actual', 'Projected'],
+    'RL Qty': [rl_actual, rl_new],
+    'Inbound Qty': [inb_actual, inb_max_projected]
     })
     
     # Melt DataFrame to match Plotly's stacked bar format
     conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
     
-    # Define custom colors: gray for RL, pastel green for Inbound
-    color_map = {'RL Qty': 'gray', 'Inbound Qty': '#77dd77'}  # Pastel green
+    # Define custom colors: lighter gray for RL, pastel green for Inbound
+    color_map = {'RL Qty': '#d3d3d3', 'Inbound Qty': '#77dd77'}  # Light gray & pastel green
     
     # Create a stacked bar chart using Plotly
     fig = px.bar(
@@ -202,17 +201,18 @@ if chart_option == "Inbound Quantity Comparison":
         color_discrete_map=color_map
     )
     
-    # Adjust text position and layout
+    # Adjust text position and layout (reduce height)
     fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
     fig.update_layout(
         xaxis_title="Total Quantity",
         yaxis_title="",
         showlegend=True,
-        barmode='stack'
+        barmode='stack',
+        height=350  # Reduce chart height
     )
     
     # Display in Streamlit
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=False)  # Reduce overall size
 
 
 else:
