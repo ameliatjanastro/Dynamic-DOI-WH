@@ -306,7 +306,6 @@ num_skus2 = len(sku_comparison_df2)
 st.write(f"**Total Number of SKUs where Landed DOI New ≥ Landed DOI Old + 4:** {num_skus2}")
 
 # Display DataFrame
-st.write("### SKUs where Landed DOI New ≥ Landed DOI Old + 4")
 sku_comparison_df2 = sku_comparison_df2.rename(columns={
     'product_name': 'Product Name',
     'Landed DOI New Adjusted': 'Landed DOI New',
@@ -329,35 +328,52 @@ styled_df = sku_comparison_df2.style.apply(highlight_large_doi_diff, axis=1)
 # Display in Streamlit
 st.dataframe(styled_df)
 
-
-
-
-
-
-
-
-
 # Product ID filter
 st.markdown("----")
 
 st.subheader("SKU Level View")
-filtered_df["product_display"] =  filtered_df["product_id"].astype(str) + " - " +  filtered_df["product_name"]
+# Create a separate DataFrame for SKU Level View
+filtered_sku_df = analisa_df.copy()
+
+# Keep only location 40
+filtered_sku_df = filtered_sku_df[filtered_sku_df['location_id'] == 40]
+
+# Exclude rows where Landed DOI OLD is NaN
+filtered_sku_df = filtered_sku_df[filtered_sku_df['Landed DOI OLD'].notna()]
+
+# Exclude categories containing "Olahraga", "OFF", or "Private"
+filtered_sku_df = filtered_sku_df[~filtered_sku_df['l1_category_name'].str.contains("Olahraga|OFF|Private", na=False, case=False)]
+
+# Apply Landed DOI Adjustments
+filtered_sku_df['Landed DOI New Adjusted'] = filtered_sku_df['Landed DOI New'] * 0.8
+
+# Apply additional 10% reduction if Landed DOI New - Landed DOI OLD > 6
+high_diff_mask2 = (filtered_sku_df['Landed DOI New'] - filtered_sku_df['Landed DOI OLD']) > 6
+filtered_sku_df.loc[high_diff_mask2, 'Landed DOI New Adjusted'] *= 0.9  # Reduce by 10%
+
+
+
+
+
+
+
+filtered_sku_df["product_display"] =  filtered_sku_df["product_id"].astype(str) + " - " +  filtered_sku_df["product_name"]
 
 # Create a dictionary to map the display name back to the Product ID
-product_map = dict(zip( filtered_df["product_display"],  filtered_df["product_id"]))
+product_map = dict(zip( filtered_df["product_display"],  filtered_sku_df["product_id"]))
 
 # Selectbox with formatted product ID and name
 selected_product_display = st.selectbox("Select Product", list(product_map.keys()))
 
 # Filter the dataframe using the actual Product ID
 selected_product_id = product_map[selected_product_display]
-filtered_df2 =  filtered_df[ filtered_df['product_id'] == selected_product_id]
+filtered_df2 =  filtered_sku_df[ filtered_sku_df['product_id'] == selected_product_id]
 
-filtered_df2['Landed DOI New Adjusted'] = filtered_df['Landed DOI New Adjusted'].fillna(0)
-filtered_df['Landed DOI OLD'] = filtered_df['Landed DOI OLD'].fillna(0)
-filtered_df['RL Qty NEW after MIN QTY WH'] = filtered_df['RL Qty NEW after MIN QTY WH'].fillna(0)
-filtered_df[['Landed DOI New Adjusted', 'Landed DOI OLD']] = filtered_df[['Landed DOI New Adjusted', 'Landed DOI OLD']].astype(float)
-filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
+filtered_df2['Landed DOI New Adjusted'] = filtered_sku_df['Landed DOI New Adjusted'].fillna(0)
+filtered_df2['Landed DOI OLD'] = filtered_sku_df['Landed DOI OLD'].fillna(0)
+filtered_df2['RL Qty NEW after MIN QTY WH'] = filtered_sku_df['RL Qty NEW after MIN QTY WH'].fillna(0)
+filtered_df2[['Landed DOI New Adjusted', 'Landed DOI OLD']] = filtered_sku_df[['Landed DOI New Adjusted', 'Landed DOI OLD']].astype(float)
+filtered_df2[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']] = filtered_sku_df[['RL Qty Actual', 'RL Qty NEW after MIN QTY WH']].astype(float)
 
 # Landed DOI Comparison
 col1, col2 = st.columns(2)
@@ -379,7 +395,7 @@ with col1:
 with col2:
     rl_qty_data = pd.DataFrame({
         "Category": ["RL Qty Actual", "RL Qty New"],
-        "Value": [filtered_df['RL Qty Actual'].mean(), filtered_df['RL Qty NEW after MIN QTY WH'].mean()]
+        "Value": [filtered_df2['RL Qty Actual'].mean(), filtered_df2['RL Qty NEW after MIN QTY WH'].mean()]
     })
 
     fig_rl = px.bar(rl_qty_data, y="Value", x="Category", orientation='v',
