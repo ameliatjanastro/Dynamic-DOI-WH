@@ -177,25 +177,39 @@ if chart_option == "Inbound Quantity Comparison":
     inb_max_projected = inb_df['Max Projected'].sum()
     
     # Create a dataframe for visualization
+    # Create a DataFrame for stacked bars
     conversion_data = pd.DataFrame({
-        'Category': ['RL Qty Actual', 'RL Qty NEW after MIN QTY WH', 'Inbound Actual', 'Inbound Max Projected'],
-        'Quantity': [rl_actual, rl_new, inb_actual, inb_max_projected]
+        'Category': ['Actual', 'Projected'],
+        'RL Qty': [rl_actual, rl_new],
+        'Inbound Qty': [inb_actual, inb_max_projected]
     })
     
-    # Create a horizontal bar chart using Plotly
+    # Melt DataFrame to match Plotly's stacked bar format
+    conversion_data = conversion_data.melt(id_vars=['Category'], var_name='Type', value_name='Quantity')
+    
+    # Define custom colors: gray for RL, pastel green for Inbound
+    color_map = {'RL Qty': 'gray', 'Inbound Qty': '#77dd77'}  # Pastel green
+    
+    # Create a stacked bar chart using Plotly
     fig = px.bar(
         conversion_data,
         x='Quantity',
         y='Category',
+        color='Type',
         orientation='h',
-        title="RL Qty vs Inbound Qty Conversion",
+        title="RL Qty vs Inbound Qty (Stacked Comparison)",
         text='Quantity',
-        color='Category',
-        color_discrete_sequence=px.colors.qualitative.Set2
+        color_discrete_map=color_map
     )
     
+    # Adjust text position and layout
     fig.update_traces(texttemplate='%{text:.2s}', textposition='inside')
-    fig.update_layout(xaxis_title="Total Quantity", yaxis_title="Category", showlegend=False)
+    fig.update_layout(
+        xaxis_title="Total Quantity",
+        yaxis_title="",
+        showlegend=True,
+        barmode='stack'
+    )
     
     # Display in Streamlit
     st.plotly_chart(fig, use_container_width=True)
